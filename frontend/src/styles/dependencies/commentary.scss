@@ -1,0 +1,19 @@
+.comment-section{
+    margin:100px 10px 0 10px;
+    width: calc(100% - 250px);
+    background-color:$white;
+    height:100px;
+    float:right;
+}
+
+.commentary-delete{
+    width:30px;
+    height:40px;
+    padding:auto;
+    float: right;
+    position:relative;
+    top:-50px;
+    right:0px;
+    cursor: pointer;
+    background-color: $white;
+}

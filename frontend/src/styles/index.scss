@@ -1,0 +1,24 @@
+
+@import "dependencies/external/normalize";
+@import "dependencies/external/reset";
+@import "dependencies/external/grid";
+
+/* colors */
+
+$header: #202628;
+$orange: #CD7300;
+$shadow: rgba(0, 0, 0, .2);
+$white: #fff;
+$black: #000;
+
+$color1: #202628;
+$color2: #CD7300;
+$color3: #fff;
+$color4: #000;
+
+/**/
+@import "dependencies/general";
+@import "dependencies/header";
+@import "dependencies/aside";
+@import "dependencies/commentary";
+

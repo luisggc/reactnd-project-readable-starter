@@ -1,0 +1,66 @@
+aside{
+    display: none;
+    position:fixed;
+    left:0;
+    top:80px;
+    background-color: $orange;
+    color: $white;
+    width:0;
+    height: 100%;
+    font-size: 30px;
+    padding:60px 20px;
+    /*line-height: 120px;*/
+    box-shadow: 0 0 50px $black;
+
+
+    &.open{
+        display: block;
+        animation: 5s;
+        width:230px;
+        z-index: -1;
+    }
+
+    h4{
+        margin:0;
+        padding-top:20px;
+        font-size: 40px;
+    }
+
+    .close {
+        width:30px;
+        height:40px;
+        padding:auto;
+        float: right;
+        position:relative;
+        top:-50px;
+        right:0px;
+        cursor: pointer;
+    }
+
+
+    ul{
+        margin:0;
+        padding: 10px 0;
+        list-style-type: none;
+        width:100%;
+    }
+
+    a{
+        display: block;
+        color: $white;
+        text-decoration: none;
+        margin:40px 0px;
+        padding: 0 5px;
+    
+    }
+
+    a:hover, .close:hover{
+        border: 2px solid $white;
+    }
+
+    .close{
+        position: relative;
+    }
+
+}
+

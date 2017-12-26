@@ -25,13 +25,20 @@ class App extends Component {
     const { categories, commentaries } = this.state
     return (
       <div className='App'>
-        <nav className='container navbar'>
-          <div className='grid-3'>
-            <a href='/'>
+        <header>
+          <div className='container'>
+              <a href='/' className='grid-4'> 
               <img src='http://ao.sossegai.com/images/logo/favicon.png' alt='Sossegai'/>
               </a>
+              <nav className='grid-12'>
+                <ul>
+                  <li><a href='/'>Categories</a></li>
+                  <li><a href='/'>Categories</a></li>
+                  <li><a href='/'>Categories</a></li>
+                </ul>
+              </nav>
           </div>
-        </nav>
+        </header>
         <Sidebar categories={categories}/>
           <div className='comment-section'>
               {commentaries.map(commentary => (
