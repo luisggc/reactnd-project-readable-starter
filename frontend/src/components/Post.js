@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class Commentary extends Component{
+class Post extends Component{
     render(){
         const { id, body, title, author, commentCount, timestamp,voteScore, category } = this.props.info
         const ref = `commentary${id}`
@@ -43,4 +43,4 @@ function timeConverter(UNIX_timestamp){
 
 
 
-export default Commentary
+export default Post

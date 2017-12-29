@@ -1,21 +1,7 @@
-export * from './types';
-export * from './API';
-/*
 import fetch from 'cross-fetch'
 
-export const SELECT_CATEGORY = 'SELECT_CATEGORY'
-
-export function selectCategory(category) {
-  return {
-    type: SELECT_CATEGORY,
-    category
-  }
-}
-
-
-
 export const REQUEST_POSTS = 'REQUEST_POSTS'
-function requestPostsbyCategory(category) {
+function requestPosts(category) {
   return {
     type: REQUEST_POSTS,
     category
@@ -27,7 +13,7 @@ function receivePosts(category, json) {
   return {
     type: RECEIVE_POSTS,
     category,
-    posts: json,
+    posts: json.data.children.map(child => child.data),
     receivedAt: Date.now()
   }
 }
@@ -53,7 +39,7 @@ export function fetchPosts(category) {
 
   return function (dispatch) {
 
-    dispatch(requestPostsbyCategory(category))
+    dispatch(requestPosts(category))
 
     return fetch(`${url}/${category}/posts`,{headers})
       .then(
@@ -61,9 +47,7 @@ export function fetchPosts(category) {
         error => console.log('An error occurred.', error)
       )
       .then(json =>
-        //console.log('disp',json)
         dispatch(receivePosts(category, json))
       )
   }
 }
-*/

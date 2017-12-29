@@ -1,4 +1,4 @@
-
+//import fetch from 'cross-fetch'
 const url = process.env.REACT_APP_BACKEND
 const auth = 10
 
@@ -15,6 +15,10 @@ export const getCategories = () =>
 export const getPostsbyCategory = (category) =>
   fetch(`${url}/${category}/posts`,{headers})
   .then(data => data.json())
+
+export const getPosts = () =>
+fetch(`${url}/posts`,{headers})
+.then(data => data.json())
 
 
 /*

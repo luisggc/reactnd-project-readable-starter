@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import * as API from '../API';
 import Sidebar from './layout/Sidebar'
-import Commentary from './Commentary'
+import Post from './Post'
+import { connect } from 'react-redux'
 
 class App extends Component {
   state={
     categories:[],
-    commentaries:[]
+    commentaries:[],
+    posts:[],
   }
   componentDidMount() {
     
@@ -14,16 +16,15 @@ class App extends Component {
         this.setState({categories})
        // console.log(this.state)
       });
-
-      API.getPostsbyCategory('react').then((commentaries) => {
-        console.log(commentaries)
-        this.setState({commentaries});
+      API.getPosts().then((p) => {
+        console.log(p)
+        this.setState({commentaries:p});
       });
 
   }
 
   render() {
-    const { categories, commentaries } = this.state
+    const { categories, posts } = this.state
     return (
       <div className='App'>
         <header>
@@ -32,17 +33,17 @@ class App extends Component {
               </a>
               <nav className='container'>
                 <ul>
-                  <li><a href='#'>Categories</a></li>
-                  <li><a href='#'>Categories</a></li>
-                  <li><a href='#'>Categories</a></li>
+                  <li><a href='/'>Categories</a></li>
+                  <li><a href='/'>Categories</a></li>
+                  <li><a href='/'>Categories</a></li>
                 </ul>
               </nav>
               
         </header>
         <Sidebar categories={categories}/>
           <div className='comment-section'>
-              {commentaries.map(commentary => (
-                <Commentary key={commentary.id} info={commentary}/>
+              {posts.map(post => (
+                <Post key={post.id} info={post}/>
               ))}
           </div>
       </div>
@@ -50,22 +51,12 @@ class App extends Component {
   }
 }
 
-export default App;
-/*
-function mapStateToProps ({calendar, food}){
-  console.log(food)
-  const dayOrder = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday']
-  return {calendar: dayOrder.map(day => ({
-    day,
-    meals: Object.keys(calendar[day])
-    .reduce((ac,item) => {
-      ac[item]= calendar[day][item] ? food[calendar[day][item]] : null
-      return ac
-    },{})
-    
-  })),
-  //food
-  }
+function mapStateToProps ({postsByCategory}){
+  /*console.log("maps",postsByCategory)
+  postsByCategory.reduce((ac, item) => {
+    ac[item.]
+  },{})*/
+  return {postsByCategory}
 }
+
 export default connect(mapStateToProps)(App)
-*/

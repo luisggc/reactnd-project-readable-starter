@@ -1,84 +1,67 @@
-import{ ADD_RECIPE, REMOVE_FROM_CALENDAR} from '../actions'
+
+import {
+ // ADD_POST, REMOVE_POST,
+  SELECT_CATEGORY, INVALIDATE_CATEGORY,
+  REQUEST_POSTS, RECEIVE_POSTS
+} from '../actions'
+
 import { combineReducers } from 'redux'
 
-function food (state= {}, action){
-  switch(action.type){
-    case ADD_RECIPE:
-      const { recipe } = action
-      return {
-        ...state,
-        [recipe.label]: recipe
-      }
+function selectedCategory(state = 'react', action) {
+  switch (action.type) {
+    case SELECT_CATEGORY:
+      return action.category
     default:
       return state
   }
 }
 
-const initialCalendarState = {
-    sunday: {
-      breakfast: null,
-      lunch: null,
-      dinner: null,
-    },
-    monday: {
-      breakfast: null,
-      lunch: null,
-      dinner: null,
-    },
-    tuesday: {
-      breakfast: null,
-      lunch: null,
-      dinner: null,
-    },
-    wednesday: {
-      breakfast: null,
-      lunch: null,
-      dinner: null,
-    },
-    thursday: {
-      breakfast: null,
-      lunch: null,
-      dinner: null,
-    },
-    friday: {
-      breakfast: null,
-      lunch: null,
-      dinner: null,
-    },
-    saturday: {
-      breakfast: null,
-      lunch: null,
-      dinner: null,
-    },
+function posts(
+  state = {
+    isFetching: false,
+    didInvalidate: false,
+    items: []
+  },
+  action
+) {
+  switch (action.type) {
+    case INVALIDATE_CATEGORY:
+      return Object.assign({}, state, {
+        didInvalidate: true
+      })
+    case REQUEST_POSTS:
+      return Object.assign({}, state, {
+        isFetching: true,
+        didInvalidate: false
+      })
+    case RECEIVE_POSTS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalidate: false,
+        items: action.posts,
+        lastUpdated: action.receivedAt
+      })
+    default:
+      return state
   }
+}
 
-  function calendar (state= initialCalendarState, action){
-      const {day, meal, recipe} = action
-
-      switch(action.type){
-        case ADD_RECIPE:
-            return  {
-                ...state,
-                [day] : {
-                    ...state[day],
-                    [meal]: recipe.label,
-                }
-            }
-        case REMOVE_FROM_CALENDAR:
-            return  {
-                ...state,
-                [day] : {
-                    ...state[day],
-                    [meal]: null,
-                }
-            }
-        default:
-            return state
-
-      }
+function postsByCategory(state = {}, action) {
+  switch (action.type) {
+    case INVALIDATE_CATEGORY:
+    case RECEIVE_POSTS:
+    case REQUEST_POSTS:
+      return Object.assign({}, state, {
+        [action.category]: posts(state[action.category], action)
+      })
+    default:
+      return state
   }
+}
 
-  export default combineReducers({
-    calendar,
-    food,
-  });
+const rootReducer = combineReducers({
+  postsByCategory,
+  selectedCategory
+})
+
+export default rootReducer

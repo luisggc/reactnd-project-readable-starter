@@ -1,18 +1,12 @@
-export * from './types';
-export * from './API';
-/*
 import fetch from 'cross-fetch'
 
-export const SELECT_CATEGORY = 'SELECT_CATEGORY'
+const url = process.env.REACT_APP_BACKEND
+const auth = 10
 
-export function selectCategory(category) {
-  return {
-    type: SELECT_CATEGORY,
-    category
-  }
+const headers = {
+  'Accept': 'application/json',
+  'Authorization': auth
 }
-
-
 
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 function requestPostsbyCategory(category) {
@@ -32,23 +26,6 @@ function receivePosts(category, json) {
   }
 }
 
-export const INVALIDATE_CATEGORY = 'INVALIDATE_CATEGORY'
-export function invalidateCategory(category) {
-  return {
-    type: INVALIDATE_CATEGORY,
-    category
-  }
-}
-
-
-const url = process.env.REACT_APP_BACKEND
-const auth = 10
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': auth
-}
-
 export function fetchPosts(category) {
 
   return function (dispatch) {
@@ -66,4 +43,3 @@ export function fetchPosts(category) {
       )
   }
 }
-*/
