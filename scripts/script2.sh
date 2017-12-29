@@ -1,0 +1,1 @@
+gnome-terminal --window-with-profile=Luis -e "bash -c 'cd ../frontend;yarn start;script3.sh exec $SHELL'"

@@ -2,19 +2,45 @@ import React, { Component } from 'react'
 
 class Commentary extends Component{
     render(){
-        const { id, body } = this.props.info
+        const { id, body, title, author, commentCount, timestamp,voteScore, category } = this.props.info
         const ref = `commentary${id}`
         console.log(this.props.info)
         //onClick={() => this.refs.sidebar.remove()}
         return(
             
-                <div ref={ref} className='commentary col-sm-12 col-md-8 offset-md-2'>
+                <div ref={ref} className={`commentary ${category}`}>
                     <div className='commentary-delete' onClick={() => this.refs.ref.remove()} >X</div>
-                    <p>{body}</p>
+                    <h3>{title}</h3>
+                    <p>{body} {body} {body} {body} {body} {body} {body} {body} {body} {body} {body} {body} 
+                    {body} {body} {body} {body} {body} {body} {body} {body} {body} {body} </p>
+                    <div className='author'>by: {author}</div>
+
+                    <div className='info'>
+                        <div className='flex-item'>#Votes: {commentCount} </div>
+                        <div className='flex-item'>Posted:<br/> {timeConverter(timestamp)}</div>
+                        <div className='flex-item'>Score: {voteScore}</div>
+                    </div>
+
                 </div>
-            
         )
     }
+
+    
 }
+
+function timeConverter(UNIX_timestamp){
+    var a = new Date(UNIX_timestamp);
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = a.getDate();
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    var sec = a.getSeconds();
+    return date + ', ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+    
+  }
+
+
 
 export default Commentary

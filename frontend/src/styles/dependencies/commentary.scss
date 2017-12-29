@@ -2,18 +2,59 @@
     margin:100px 10px 0 10px;
     width: calc(100% - 250px);
     background-color:$white;
-    height:100px;
+   // height:100px;
     float:right;
 }
 
-.commentary-delete{
-    width:30px;
-    height:40px;
-    padding:auto;
-    float: right;
-    position:relative;
-    top:-50px;
-    right:0px;
-    cursor: pointer;
-    background-color: $white;
+.commentary{
+    padding: 20px;
+    height: auto;
+    background-color: $color1;
+    color: $color3;
+    h3{
+        font-weight: bold;
+    }
+    p{
+        font-size:.95em;
+        margin: 10px 0;
+    }
+    .author{
+        text-align: right;
+        margin-bottom:5px;
+       // align-content: space-between;
+    }
+    .info{
+        
+        display: flex;
+        flex: 1;
+        align-items: center;
+        flex-wrap: wrap;
+        text-align:center;
+        .flex-item{
+            margin-top:10px;
+            white-space: nowrap;
+            &:nth-child(2){
+                text-align:center;
+                flex-grow:120;
+            }
+        }
+        
+    }
+
 }
+
+.commentary-delete{
+    padding:auto;
+    width:auto;
+    height:auto;
+    padding:2px;
+    float: right;
+    
+    cursor: pointer;
+    z-index:1;
+
+    &:hover{
+        border: 1px solid $white;
+    }
+}
+

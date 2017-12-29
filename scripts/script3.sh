@@ -1,0 +1,1 @@
+gnome-terminal --window-with-profile=Luis -e "bash -c 'cd src/styles;sass --watch index.scss:index.css exec $SHELL'"

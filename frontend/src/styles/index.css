@@ -414,6 +414,23 @@ h1, h2, h3, h4, h5, h6, p, a, ul {
   font-size: 1em;
   font-weight: normal; }
 
+* {
+  padding: 0;
+  margin: 0; }
+
+body, html, #root, .App, div {
+  height: 100%;
+  width: 100%;
+  font-family: 'Arial','Helvetica','sans-serif'; }
+
+body {
+  background: #2e3436 url("/images/noise.png");
+  overflow: auto; }
+
+.flex-item {
+  flex: 1;
+  margin: 0 10px; }
+
 *, *:before, *:after {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -488,46 +505,97 @@ h1, h2, h3, h4, h5, h6, p, a, ul {
 .grid-1-3 {
   width: 300px; }
 
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+  .container {
+    width: 768px; }
+
+  .grid-1 {
+    width: 28px; }
+
+  .grid-2 {
+    width: 76px; }
+
+  .grid-3 {
+    width: 124px; }
+
+  .grid-4 {
+    width: 172px; }
+
+  .grid-5 {
+    width: 220px; }
+
+  .grid-6 {
+    width: 268px; }
+
+  .grid-7 {
+    width: 316px; }
+
+  .grid-8 {
+    width: 364px; }
+
+  .grid-9 {
+    width: 412px; }
+
+  .grid-10 {
+    width: 460px; }
+
+  .grid-11 {
+    width: 508px; }
+
+  .grid-12 {
+    width: 556px; }
+
+  .grid-13 {
+    width: 604px; }
+
+  .grid-14 {
+    width: 652px; }
+
+  .grid-15 {
+    width: 700px; }
+
+  .grid-16 {
+    width: 748px; }
+
+  .grid-1-3 {
+    width: 236px; } }
+@media only screen and (max-width: 767px) {
+  .container {
+    width: 300px; }
+
+  .grid-1, .grid-2, .grid-3, .grid-4, .grid-5, .grid-6, .grid-7, .grid-8, .grid-9, .grid-10, .grid-11, .grid-12, .grid-13, .grid-14, .grid-15, .grid-16, .grid-1-3 {
+    width: 300px;
+    margin: 0 0 20px 0;
+    float: none; } }
 /* colors */
 /**/
-* {
-  padding: 0;
-  margin: 0; }
-
-body, html, #root, .App, div {
-  height: 100%;
-  width: 100%;
-  font-family: 'Arial','Helvetica','sans-serif'; }
-
-body {
-  background: #2e3436 url("/images/noise.png");
-  overflow: auto; }
-
 header {
-  position: fixed;
-  top: 0;
-  width: 100%;
+  min-width: 100%;
   height: 80px;
   background-color: #202628;
   color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  padding: 15px 30px 15px 0; }
+  padding: 15px 30px;
+  display: flex;
+  position: fixed; }
   header img {
     height: 50px; }
   header nav {
-    text-align: right; }
-    header nav ul li {
-      display: inline-block;
-      margin-top: 15px; }
-      header nav ul li a {
-        color: #fff;
-        font-weight: bold;
-        text-transform: uppercase;
-        margin-left: 25px;
-        border: none;
-        padding-bottom: 10px; }
-        header nav ul li a:hover {
-          border-bottom: 4px solid #CD7300; }
+    align-self: center;
+    flex: 1; }
+    header nav ul {
+      float: right; }
+      header nav ul li {
+        display: inline-block; }
+        header nav ul li a {
+          color: #fff;
+          font-weight: bold;
+          text-transform: uppercase;
+          margin-left: 25px;
+          border: none;
+          padding-bottom: 10px; }
+          header nav ul li a:hover {
+            border-bottom: 4px solid #CD7300; }
 
 aside {
   display: none;
@@ -580,18 +648,43 @@ aside {
   margin: 100px 10px 0 10px;
   width: calc(100% - 250px);
   background-color: #fff;
-  height: 100px;
   float: right; }
 
+.commentary {
+  padding: 20px;
+  height: auto;
+  background-color: #202628;
+  color: #fff; }
+  .commentary h3 {
+    font-weight: bold; }
+  .commentary p {
+    font-size: .95em;
+    margin: 10px 0; }
+  .commentary .author {
+    text-align: right;
+    margin-bottom: 5px; }
+  .commentary .info {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center; }
+    .commentary .info .flex-item {
+      margin-top: 10px;
+      white-space: nowrap; }
+      .commentary .info .flex-item:nth-child(2) {
+        text-align: center;
+        flex-grow: 120; }
+
 .commentary-delete {
-  width: 30px;
-  height: 40px;
   padding: auto;
+  width: auto;
+  height: auto;
+  padding: 2px;
   float: right;
-  position: relative;
-  top: -50px;
-  right: 0px;
   cursor: pointer;
-  background-color: #fff; }
+  z-index: 1; }
+  .commentary-delete:hover {
+    border: 1px solid #fff; }
 
 /*# sourceMappingURL=index.css.map */
