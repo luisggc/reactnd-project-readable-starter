@@ -1,27 +1,56 @@
-aside{
-    display: none;
+@mixin bk_color {
     position:fixed;
     left:0;
-    top:80px;
+    box-shadow: 0 0 50px $black;
     background-color: $orange;
     color: $white;
-    width:0;
+    box-shadow: 0 0 50px $black;
+}
+
+@mixin w-transition{
+    -webkit-transition: width 1s linear;
+    -moz-transition: width 1s linear;
+    -o-transition: width 1s linear;
+    transition: width 1s linear;
+}
+
+.openAside{
+    z-index:1;
+    width:40px;
+    @include bk_color;
+    top:100px;
+    height:30px;
+    & .arrow-right {
+        width: 0; 
+        height: 0; 
+        border-top: 15px solid transparent;
+        border-bottom: 15px solid transparent;
+        border-left: 15px solid $white;
+        margin-left: 40px;
+      }
+
+}
+
+aside{
+    //display: none;
+    @include bk_color;
+    top:80px;
     height: 100%;
     font-size: 30px;
-    padding:60px 20px;
-    /*line-height: 120px;*/
-    box-shadow: 0 0 50px $black;
+   @include w-transition;
 
+    overflow-x: hidden;
+    z-index: 2;
+    width:0;
+    padding:0;
 
+    
     &.open{
-        display: block;
-        animation: 5s;
         width:230px;
-        z-index: -1;
     }
 
     h4{
-        margin:0;
+        margin:60px 20px;
         padding-top:20px;
         font-size: 40px;
     }
@@ -32,34 +61,35 @@ aside{
         padding:auto;
         float: right;
         position:relative;
-        top:-50px;
-        right:0px;
+        top:10px;
+        right:20px;
         cursor: pointer;
     }
 
 
     ul{
-        margin:0;
+        margin:60px 20px;
         padding: 10px 0;
         list-style-type: none;
-        width:100%;
-    }
-
-    a{
-        display: block;
-        color: $white;
-        text-decoration: none;
-        margin:40px 0px;
-        padding: 0 5px;
-    
-    }
-
-    a:hover, .close:hover{
-        border: 2px solid $white;
+        width:calc(100%-40px);
+        a{
+            display: block;
+            cursor: pointer;
+            color: $white;
+            text-decoration: none;
+            margin:40px 0px;
+            padding: 0 5px;
+            &:hover,&.active{
+                border: 2px solid $white;
+            }
+        }
     }
 
     .close{
         position: relative;
+        &:hover{
+            border: 2px solid $white;
+        }
     }
 
 }

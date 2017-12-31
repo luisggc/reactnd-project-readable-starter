@@ -20,6 +20,12 @@ export const getPosts = () =>
 fetch(`${url}/posts`,{headers})
 .then(data => data.json())
 
+export const sendPost = (body) =>
+fetch(`${url}/posts`, {
+  ...headers,
+  'method': 'post',
+  body
+}).then(data => console.log(data.json(),...headers))
 
 /*
 const headers = {

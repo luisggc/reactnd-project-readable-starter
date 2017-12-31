@@ -1,16 +1,48 @@
 .comment-section{
-    margin:100px 10px 0 10px;
-    width: calc(100% - 250px);
-    background-color:$white;
-   // height:100px;
+    margin:130px 0 0 0;
+    width: calc(100% - 230px);
+    padding:20px;
     float:right;
+    &.open{
+        clear: both;
+        width:100% ;
+        margin-left:0;
+        margin-right:0;
+    }
 }
 
-.commentary{
+@mixin commentStyle{
     padding: 20px;
+    margin-bottom:20px;
+    width:100%;
     height: auto;
     background-color: $color1;
     color: $color3;
+    
+}
+
+.makeCommentary{
+    @include commentStyle;
+    
+    input, textarea{
+        display:block;
+        width:100%;
+        max-width:200px;
+        margin: auto;
+        margin-bottom:10px;
+    }
+    textarea{
+        height:100px;
+        max-width:500px;
+    }
+    select{
+        display:block;
+        margin: 10px auto 20px auto;
+    }
+}
+
+.commentary{
+    @include commentStyle;
     h3{
         font-weight: bold;
     }
@@ -40,8 +72,13 @@
         }
         
     }
+    .open &{
+        margin:0;
+        margin-bottom:20px;
+    }
 
 }
+
 
 .commentary-delete{
     padding:auto;

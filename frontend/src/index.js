@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import './styles/index.css'
-import { selectCategory, fetchPosts } from './actions'
+import { fetchAllPosts } from './actions'
 import rootReducer from './reducers';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -14,11 +14,9 @@ const store = createStore(rootReducer, composeWithDevTools(
   applyMiddleware(thunkMiddleware)
 ));
 
-store.dispatch(selectCategory('react'))
 store
-  .dispatch(fetchPosts('react'))
-  .then(() => console.log(store.getState()))
-
+  .dispatch(fetchAllPosts())
+  //.then(() => console.log(store.getState()))
 
 ReactDOM.render(
 <Provider store={store}> 

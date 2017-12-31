@@ -1,8 +1,6 @@
 
 @import "dependencies/external/normalize";
 @import "dependencies/external/reset";
-@import "dependencies/general";
-@import "dependencies/external/grid";
 
 /* colors */
 
@@ -18,6 +16,10 @@ $color3: #fff;
 $color4: #000;
 
 /**/
+
+@import "dependencies/general";
+@import "dependencies/external/grid";
+
 
 @import "dependencies/header";
 @import "dependencies/aside";

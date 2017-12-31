@@ -1,62 +1,64 @@
 import React, { Component } from 'react';
 import * as API from '../API';
 import Sidebar from './layout/Sidebar'
+import Header from './layout/Header'
+import MakeComment from './MakeComment'
 import Post from './Post'
 import { connect } from 'react-redux'
 
 class App extends Component {
   state={
-    categories:[],
-    commentaries:[],
-    posts:[],
+    categories: []
   }
   componentDidMount() {
     
       API.getCategories().then((categories) => {
+        console.log(categories)
         this.setState({categories})
-       // console.log(this.state)
-      });
-      API.getPosts().then((p) => {
-        console.log(p)
-        this.setState({commentaries:p});
+        console.log(this.state)
       });
 
   }
 
   render() {
-    const { categories, posts } = this.state
+    const { posts, selectedCategory } = this.props
+    const { categories } = this.state
+    //categories = (categories === undefined) ? [] : categories
+
     return (
       <div className='App'>
-        <header>
-              <a href='/'> 
-                <img src='http://ao.sossegai.com/images/logo/favicon.png' alt='Sossegai'/>
-              </a>
-              <nav className='container'>
-                <ul>
-                  <li><a href='/'>Categories</a></li>
-                  <li><a href='/'>Categories</a></li>
-                  <li><a href='/'>Categories</a></li>
-                </ul>
-              </nav>
-              
-        </header>
-        <Sidebar categories={categories}/>
-          <div className='comment-section'>
-              {posts.map(post => (
+        <Header categories={categories} />
+        <Sidebar categories={categories} />
+          <div id='comment-section' className='comment-section'>
+                <MakeComment selectedCategory={selectedCategory} categories={categories} />
+              {posts !== undefined && posts.constructor === Array ? posts.filter(p => (
+                (selectedCategory==="all") ? true : p.category === selectedCategory
+              )).map(post => (
                 <Post key={post.id} info={post}/>
-              ))}
+              )):null}
           </div>
       </div>
     );
   }
 }
 
-function mapStateToProps ({postsByCategory}){
-  /*console.log("maps",postsByCategory)
-  postsByCategory.reduce((ac, item) => {
-    ac[item.]
-  },{})*/
-  return {postsByCategory}
+function mapStateToProps ({allPosts, selectedCategory}){
+  const posts = allPosts.all
+  /*
+  if (posts !== undefined && posts.constructor === Array ){
+    let categories = posts.reduce((ac,item) => {
+      (ac.indexOf(item) === -1) && (ac.push(item.category)) 
+      return ac
+    },[])
+    return {posts,categories}
+  }
+  */
+  return {posts, selectedCategory}
 }
 
 export default connect(mapStateToProps)(App)
+
+
+/*
+http://jsfiddle.net/GzYJ6/
+*/

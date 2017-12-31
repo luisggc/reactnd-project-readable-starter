@@ -17,7 +17,7 @@ function requestPostsbyCategory(category) {
 }
 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
-function receivePosts(category, json) {
+function receivePostsbyCategory(category, json) {
   return {
     type: RECEIVE_POSTS,
     category,
@@ -26,7 +26,7 @@ function receivePosts(category, json) {
   }
 }
 
-export function fetchPosts(category) {
+export function fetchPostsbyCategory(category) {
 
   return function (dispatch) {
 
@@ -39,7 +39,42 @@ export function fetchPosts(category) {
       )
       .then(json =>
         //console.log('disp',json)
-        dispatch(receivePosts(category, json))
+        dispatch(receivePostsbyCategory(category, json))
       )
   }
 }
+
+export const REQUEST_ALL_POSTS = 'REQUEST_ALL_POSTS'
+function requestAllPosts() {
+  return {
+    type: REQUEST_ALL_POSTS
+  }
+}
+
+export const RECEIVE_ALL_POSTS = 'RECEIVE_ALL_POSTS'
+function receiveAllPosts(json) {
+  return {
+    type: RECEIVE_ALL_POSTS,
+    posts: json,
+    receivedAt: Date.now()
+  }
+}
+
+export function fetchAllPosts() {
+
+  return function (dispatch) {
+
+    dispatch(requestAllPosts())
+
+    return fetch(`${url}/posts`,{headers})
+      .then(
+        response => response.json(),
+        error => console.log('An error occurred.', error)
+      )
+      .then(json =>
+        //console.log('disp',json)
+        dispatch(receiveAllPosts(json))
+      )
+  }
+}
+
