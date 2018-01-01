@@ -1,13 +1,23 @@
 import React, { Component } from 'react'
+import { deletePost } from './../API'
 
 class Post extends Component{
+
+    removePost = () => {
+        const id = this.props.info.id
+        console.log(this.props)
+        console.log("id",id)
+        document.getElementById(`commentary${id}`).remove()
+        deletePost(id)
+    }
+
     render(){
         const { id, body, title, author, commentCount, timestamp,voteScore, category } = this.props.info
-        const ref = `commentary${id}`
+        const ident = `commentary${id}`
         return(
             
-                <div ref={ref} className={`commentary ${category}`}>
-                    <div className='commentary-delete' onClick={() => this.refs.ref.remove()} >X</div>
+                <div id={ident} className={`commentary ${category}`}>
+                    <div className='commentary-delete' onClick={() => this.removePost()} >X</div>
                     <h3>{title}</h3>
                     <p>{body} {body} {body} {body} {body} {body} {body} {body} {body} {body} {body} {body} 
                     {body} {body} {body} {body} {body} {body} {body} {body} {body} {body} </p>

@@ -16,7 +16,7 @@ const store = createStore(rootReducer, composeWithDevTools(
 
 store
   .dispatch(fetchAllPosts())
-  //.then(() => console.log(store.getState()))
+  .then(() => console.log(store.getState()))
 
 ReactDOM.render(
 <Provider store={store}> 

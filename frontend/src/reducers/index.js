@@ -3,7 +3,7 @@ import {
  // ADD_POST, REMOVE_POST,
   SELECT_CATEGORY, INVALIDATE_CATEGORY,
   REQUEST_POSTS, RECEIVE_POSTS,
-  RECEIVE_ALL_POSTS, REQUEST_ALL_POSTS
+  RECEIVE_ALL_POSTS, REQUEST_ALL_POSTS, LOADING_POSTS
 } from '../actions'
 
 import { combineReducers } from 'redux'
@@ -38,13 +38,26 @@ function allPosts(state = {}, action) {
       //const n = posts(state, action);
       return {
               ...state,
-              all:action.posts
+              all:action.posts//.sort(CompareForSort)
             }
     default:
       return state
   }
 }
 
+function loadingPosts(state = {}, action) {
+  switch (action.type) {
+    case LOADING_POSTS:
+    console.log("antes",state)
+      //state['loadingPosts'] = action.bool
+      return action.bool
+      ///state['loadingPosts'] = action.bool
+    default:
+      return state
+  }
+}
+
+const CompareForSort = (f, s) =>  ((f === s) ? 0 : (f<s) ? -1 : 1)  
 
 
 function posts(
@@ -93,7 +106,8 @@ function posts(
 const rootReducer = combineReducers({
   postsByCategory,
   selectedCategory,
-  allPosts
+  allPosts,
+  loadingPosts
 })
 
 export default rootReducer

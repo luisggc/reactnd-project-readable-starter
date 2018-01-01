@@ -1,4 +1,5 @@
 import fetch from 'cross-fetch'
+import { loadingPosts } from './types'
 
 const url = process.env.REACT_APP_BACKEND
 const auth = 10
@@ -69,11 +70,14 @@ export function fetchAllPosts() {
     return fetch(`${url}/posts`,{headers})
       .then(
         response => response.json(),
-        error => console.log('An error occurred.', error)
+        error => console.log('An error occurred.', error),
+        dispatch(loadingPosts(true))
       )
       .then(json =>
         //console.log('disp',json)
-        dispatch(receiveAllPosts(json))
+        dispatch(receiveAllPosts(json)),
+        dispatch(loadingPosts(false))
+        
       )
   }
 }

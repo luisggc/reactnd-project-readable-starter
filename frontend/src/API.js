@@ -20,21 +20,19 @@ export const getPosts = () =>
 fetch(`${url}/posts`,{headers})
 .then(data => data.json())
 
-export const sendPost = (body) =>
+export const sendPost = (form) =>
 fetch(`${url}/posts`, {
-  ...headers,
-  'method': 'post',
-  body
-}).then(data => console.log(data.json(),...headers))
+  method: 'POST',
+  headers: {
+    ...headers,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(form)
 
-/*
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': token
-}
+}).then(data => console.log(data.json()))
 
-export const get = (bookId) =>
-  fetch(`${api}/books/${bookId}`, { headers })
-    .then(res => res.json())
-    .then(data => data.book)
-*/
+export const deletePost = (id) =>
+fetch(`${url}/posts/${id}`, {
+  method: 'DELETE',
+  headers
+}).then(data => console.log(data))

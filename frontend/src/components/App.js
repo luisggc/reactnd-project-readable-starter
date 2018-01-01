@@ -53,6 +53,7 @@ function mapStateToProps ({allPosts, selectedCategory}){
     return {posts,categories}
   }
   */
+  console.log(posts)
   return {posts, selectedCategory}
 }
 

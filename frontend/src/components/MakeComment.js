@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { fetchAllPosts } from './../actions'
 import { sendPost } from './../API'
 class MakeComment extends Component{
 
@@ -9,37 +10,19 @@ class MakeComment extends Component{
         let body = a.reduce((ac,item,i) => {
             const {name, value} = item
             valid = (value==='') ? false : valid
-            return `${ac}${name}=${value}&`
-        },'')
-        body+=`timestamp=${Date.now()}&id=${guid()}`
-        console.log(body)
-        if (valid){
+           return {
+                    ...ac,
+                    [name] : value
+                  }
+        },{})
+        body={...body, timestamp:Date.now(), id: guid() }
+        console.log('bodyy',body)
+        void (valid ? (sendPost(body) && this.props.dispatch(fetchAllPosts()) ) : alert('No empty values allowed'))
+        /*if (valid){
             console.log(sendPost(body))
         }else{
             alert('No empty values allowed')
-        }
-
-        /*
-        fetch(url, {
-    method: 'post',
-    headers: {
-      "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-    },
-    body: 'foo=bar&lorem=ipsum'
-  })
-  */
-
-        /*
-        id - UUID should be fine, but any unique id will work
-        timestamp - timestamp in whatever format you like, you can use Date.now() if you like
-        title - String
-        body - String
-        author - String
-        category: Any of the categories listed in categories.js. Feel free to extend this list as you desir
-        */
-
-
-        /*console.log(Array.prototype.slice.call(this.refs.form.childNodes))*/
+        }*/
     }
 
     render(){
@@ -76,8 +59,8 @@ function guid() {
         .toString(16)
         .substring(1);
     }
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-      s4() + '-' + s4() + s4() + s4();
+    return s4() + s4() + s4() + s4() + 
+      s4() + s4() + s4() + s4();
   }
 
 
