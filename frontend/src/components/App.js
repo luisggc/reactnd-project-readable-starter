@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as API from '../API';
 import Sidebar from './layout/Sidebar'
 import Header from './layout/Header'
-import MakeComment from './MakeComment'
+import MakePost from './MakePost'
 import Post from './Post'
 import { connect } from 'react-redux'
 
@@ -29,8 +29,8 @@ class App extends Component {
       <div className='App'>
         <Header categories={categories} />
         <Sidebar categories={categories} />
-          <div id='comment-section' className='comment-section'>
-                <MakeComment selectedCategory={selectedCategory} categories={categories} />
+          <div id='post-section' className='post-section'>
+                <MakePost selectedCategory={selectedCategory} categories={categories} />
               {posts !== undefined && posts.constructor === Array ? posts.filter(p => (
                 (selectedCategory==="all") ? true : p.category === selectedCategory
               )).map(post => (
@@ -42,8 +42,8 @@ class App extends Component {
   }
 }
 
-function mapStateToProps ({allPosts, selectedCategory}){
-  const posts = allPosts.all
+function mapStateToProps ({post, selectedCategory}){
+  const posts = post.all
   /*
   if (posts !== undefined && posts.constructor === Array ){
     let categories = posts.reduce((ac,item) => {

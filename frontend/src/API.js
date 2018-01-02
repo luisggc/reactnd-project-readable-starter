@@ -36,3 +36,14 @@ fetch(`${url}/posts/${id}`, {
   method: 'DELETE',
   headers
 }).then(data => console.log(data))
+
+export const votePost = (id, option) =>
+fetch(`${url}/posts/${id}`, {
+  method: 'POST',
+  headers: {
+    ...headers,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({option})
+}).then(data => console.log(data))
+

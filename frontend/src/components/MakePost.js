@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchAllPosts } from './../actions'
 import { sendPost } from './../API'
-class MakeComment extends Component{
+class MakePost extends Component{
 
     send = (e) => {
         const a = Array.prototype.slice.call(this.refs.form.childNodes)
@@ -28,12 +28,12 @@ class MakeComment extends Component{
     render(){
         const { selectedCategory, categories } = this.props
         return(
-                <div className='makeCommentary'>
+                <div className='makePost'>
                     <form ref="form" >
                         <input name='author' type='text' placeholder='Author'/>
                         <input name='title' type='text' placeholder='Title'/>
                         <textarea name='body' placeholder='Post content' ></textarea>
-                        <select value={selectedCategory} onChange={()=>{}} name="category">
+                        <select defaultValue={selectedCategory}  name="category">
                             {categories.map(category => {
                                 return(
                                 <option key={category.path} value={category.path} >{category.name}</option>
@@ -65,4 +65,4 @@ function guid() {
 
 
 
-export default connect(prop)(MakeComment)
+export default connect(prop)(MakePost)

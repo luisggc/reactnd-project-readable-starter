@@ -10,7 +10,7 @@ class Sidebar extends Component{
 
     toggle = () => {
         this.refs.sidebar.classList.toggle("open")
-        document.getElementById('comment-section').classList.toggle("open")
+        document.getElementById('post-section').classList.toggle("open")
     }
 
     //openSide

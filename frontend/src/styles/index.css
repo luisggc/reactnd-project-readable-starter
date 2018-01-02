@@ -677,69 +677,69 @@ aside {
     aside .close:hover {
       border: 2px solid #fff; }
 
-.comment-section {
+.post-section {
   margin: 130px 0 0 0;
   width: calc(100% - 230px);
   padding: 20px;
   float: right; }
-  .comment-section.open {
+  .post-section.open {
     clear: both;
     width: 100%;
     margin-left: 0;
     margin-right: 0; }
 
-.makeCommentary {
+.makePost {
   padding: 20px;
   margin-bottom: 20px;
   width: 100%;
   height: auto;
   background-color: #202628;
   color: #fff; }
-  .makeCommentary input, .makeCommentary textarea {
+  .makePost input, .makePost textarea {
     display: block;
     width: 100%;
     max-width: 200px;
     margin: auto;
     margin-bottom: 10px; }
-  .makeCommentary textarea {
+  .makePost textarea {
     height: 100px;
     max-width: 500px; }
-  .makeCommentary select {
+  .makePost select {
     display: block;
     margin: 10px auto 20px auto; }
 
-.commentary {
+.post {
   padding: 20px;
   margin-bottom: 20px;
   width: 100%;
   height: auto;
   background-color: #202628;
   color: #fff; }
-  .commentary h3 {
+  .post h3 {
     font-weight: bold; }
-  .commentary p {
+  .post p {
     font-size: .95em;
     margin: 10px 0; }
-  .commentary .author {
+  .post .author {
     text-align: right;
     margin-bottom: 5px; }
-  .commentary .info {
+  .post .info {
     display: flex;
     flex: 1;
     align-items: center;
     flex-wrap: wrap;
     text-align: center; }
-    .commentary .info .flex-item {
+    .post .info .flex-item {
       margin-top: 10px;
       white-space: nowrap; }
-      .commentary .info .flex-item:nth-child(2) {
+      .post .info .flex-item:nth-child(2) {
         text-align: center;
         flex-grow: 120; }
-  .open .commentary {
+  .open .post {
     margin: 0;
     margin-bottom: 20px; }
 
-.commentary-delete {
+.post-delete {
   padding: auto;
   width: auto;
   height: auto;
@@ -747,7 +747,82 @@ aside {
   float: right;
   cursor: pointer;
   z-index: 1; }
-  .commentary-delete:hover {
+  .post-delete:hover {
     border: 1px solid #fff; }
+
+.votebox {
+  height: 38px;
+  position: relative; }
+
+.vote {
+  width: 0;
+  height: 0;
+  border: 11px solid transparent;
+  position: absolute;
+  cursor: pointer; }
+
+.vote:after {
+  width: 6px;
+  height: 8px;
+  position: absolute;
+  left: -3px;
+  content: ' '; }
+
+.up.vote {
+  border-bottom-color: #CD7300;
+  border-top-width: 0;
+  top: 0; }
+
+.up.vote:after {
+  background: -moz-linear-gradient(top, #CD7300 0%, #CD7300 50%, rgba(0, 0, 0, 0) 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #CD7300), color-stop(50%, #CD7300), color-stop(100%, rgba(0, 0, 0, 0)));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #CD7300 0%, #CD7300 50%, rgba(0, 0, 0, 0) 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #CD7300 0%, #CD7300 50%, rgba(0, 0, 0, 0) 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #CD7300 0%, #CD7300 50%, rgba(0, 0, 0, 0) 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #CD7300 0%, #CD7300 50%, rgba(0, 0, 0, 0) 100%);
+  /* W3C */
+  top: 11px; }
+
+.down.vote {
+  border-top-color: #CCCCFF;
+  border-bottom-width: 0;
+  bottom: 0; }
+
+.down.vote:after {
+  background: -moz-linear-gradient(top, rgba(204, 204, 255, 0) 0%, #ccccff 50%, #ccccff 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(204, 204, 255, 0)), color-stop(50%, #ccccff), color-stop(100%, #ccccff));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(204, 204, 255, 0) 0%, #ccccff 50%, #ccccff 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(204, 204, 255, 0) 0%, #ccccff 50%, #ccccff 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(204, 204, 255, 0) 0%, #ccccff 50%, #ccccff 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, rgba(204, 204, 255, 0) 0%, #ccccff 50%, #ccccff 100%);
+  /* W3C */
+  bottom: 11px; }
+
+.showCommentaries {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  cursor: pointer; }
+  .showCommentaries:hover {
+    -webkit-text-stroke: 0.4px #CD7300; }
+  .showCommentaries::before {
+    content: '';
+    margin: 15px auto;
+    display: block;
+    width: 100px;
+    height: 2px;
+    background-color: white; }
+  .showCommentaries.no {
+    display: none; }
 
 /*# sourceMappingURL=index.css.map */

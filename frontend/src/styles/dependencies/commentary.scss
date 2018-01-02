@@ -1,97 +1,20 @@
-.comment-section{
-    margin:130px 0 0 0;
-    width: calc(100% - 230px);
-    padding:20px;
-    float:right;
-    &.open{
-        clear: both;
-        width:100% ;
-        margin-left:0;
-        margin-right:0;
-    }
-}
-
-@mixin commentStyle{
-    padding: 20px;
-    margin-bottom:20px;
-    width:100%;
-    height: auto;
-    background-color: $color1;
-    color: $color3;
-    
-}
-
-.makeCommentary{
-    @include commentStyle;
-    
-    input, textarea{
-        display:block;
-        width:100%;
-        max-width:200px;
-        margin: auto;
-        margin-bottom:10px;
-    }
-    textarea{
-        height:100px;
-        max-width:500px;
-    }
-    select{
-        display:block;
-        margin: 10px auto 20px auto;
-    }
-}
-
-.commentary{
-    @include commentStyle;
-    h3{
-        font-weight: bold;
-    }
-    p{
-        font-size:.95em;
-        margin: 10px 0;
-    }
-    .author{
-        text-align: right;
-        margin-bottom:5px;
-       // align-content: space-between;
-    }
-    .info{
-        
-        display: flex;
-        flex: 1;
-        align-items: center;
-        flex-wrap: wrap;
-        text-align:center;
-        .flex-item{
-            margin-top:10px;
-            white-space: nowrap;
-            &:nth-child(2){
-                text-align:center;
-                flex-grow:120;
-            }
-        }
-        
-    }
-    .open &{
-        margin:0;
-        margin-bottom:20px;
-    }
-
-}
-
-
-.commentary-delete{
-    padding:auto;
-    width:auto;
-    height:auto;
-    padding:2px;
-    float: right;
-    
-    cursor: pointer;
-    z-index:1;
-
+.showCommentaries {
+    display:block;
+    margin: 0 auto;
+    text-align:center;
+    cursor:pointer;
     &:hover{
-        border: 1px solid $white;
+        -webkit-text-stroke: .4px $orange;
+    }
+    &::before {
+        content:'';
+        margin: 15px auto;
+        display:block;
+        width: 100px;
+        height: 2px;
+        background-color:white;
+    }
+    &.no{
+        display:none;
     }
 }
-
