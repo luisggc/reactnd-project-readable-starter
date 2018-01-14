@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
-import { deletePost, votePost } from './../API'
+import { deletePost, votePost, sendCommentary, getCommentaries } from './../API'
+import Commentary from './Commentary'
 
 class Post extends Component{
+
+    state ={showCommentaries:false, commentaries:[]}
 
     removePost = () => {
         const id = this.props.info.id
@@ -15,11 +18,27 @@ class Post extends Component{
         votePost(id,vote).then( a => console.log(a))
     }
 
-    showCommentaries = (bool) => {
-        
+    showCommentaries = () => {
+        this.setState({showCommentaries:!this.state.showCommentaries})
+        if (this.state.showCommentaries){return}
+        getCommentaries(this.props.info.id).then( commentaries =>
+            {
+                console.log(commentaries)
+                this.setState({commentaries})
+            }
+        )
+    }
+
+    sendCommentary = (e) => {
+        if(e.key!=='Enter'){return}
+        const id = this.props.info.id
+        const body = document.getElementById(`sendcomment${id}`).value
+        const author = 'Luis'+id
+        sendCommentary(body,author,id)
     }
 
     render(){
+        const {showCommentaries, commentaries} = this.state
         const { id, body, title, author, timestamp,voteScore, category } = this.props.info
         const ident = `post${id}`
         return(
@@ -41,7 +60,19 @@ class Post extends Component{
                     </div>
 
                     <div className='commentaries'>
-                        <a onClick={() => this.showCommentaries(true)} className='showCommentaries'>Show commentaries</a>
+                        <a onClick={() => this.showCommentaries()} className='showCommentaries'>{showCommentaries ?"Hide commentaries":"Show commentaries"}</a>
+                        {showCommentaries && (
+                            <div className='commentary-section'>
+                                <div className='commentary make'>
+                                    <span className='tri left'></span>
+                                    <input className='text-ball' id={'sendcomment'+id} placeholder="Make a comment" onKeyPress={(e) => this.sendCommentary(e)}/>
+                                </div>
+                                {commentaries.map(commentary => (
+                                    <Commentary key={commentary.id} info={commentary} />
+                                ))}
+                            </div>
+                        )}
+
                     </div>
 
                 </div>

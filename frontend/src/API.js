@@ -7,10 +7,14 @@ const headers = {
   'Authorization': auth
 }
 
+/* Categories */
+
 export const getCategories = () =>
     fetch(url+"/categories",{headers})
     .then(data => data.json())
     .then(data => data.categories)
+
+/* Posts */
 
 export const getPostsbyCategory = (category) =>
   fetch(`${url}/${category}/posts`,{headers})
@@ -27,7 +31,10 @@ fetch(`${url}/posts`, {
     ...headers,
     'Content-Type': 'application/json'
   },
-  body: JSON.stringify(form)
+  body: JSON.stringify({
+    ...form,
+    ...time_id()
+  })
 
 }).then(data => console.log(data.json()))
 
@@ -46,4 +53,50 @@ fetch(`${url}/posts/${id}`, {
   },
   body: JSON.stringify({option})
 }).then(data => console.log(data))
+
+/* Commentaries */
+
+export const getCommentaries = (id) =>
+fetch(`${url}/posts/${id}/comments`, {headers})
+.then(data => data.json())
+/*
+  fetch(url+"/categories",{headers})
+  .then(data => data.json())
+*/
+
+export const sendCommentary = (body,author,parentId) =>
+fetch(`${url}/comments`, {
+  method: 'POST',
+  headers: {
+    ...headers,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    ...time_id(),
+    body,
+    author,
+    parentId
+  })
+
+}).then(data => console.log(data.json()))
+
+
+/*Variaty*/
+
+function time_id(){
+  return {
+    id:guid(),
+    timestamp:Date.now()
+  }
+}
+
+function guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return s4() + s4() + s4() + s4() + 
+    s4() + s4() + s4() + s4();
+}
 

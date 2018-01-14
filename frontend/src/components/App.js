@@ -11,19 +11,14 @@ class App extends Component {
     categories: []
   }
   componentDidMount() {
-    
-      API.getCategories().then((categories) => {
-        console.log(categories)
+      API.getCategories().then((categories) =>
         this.setState({categories})
-        console.log(this.state)
-      });
-
+      );
   }
 
   render() {
     const { posts, selectedCategory } = this.props
     const { categories } = this.state
-    //categories = (categories === undefined) ? [] : categories
 
     return (
       <div className='App'>
@@ -53,7 +48,6 @@ function mapStateToProps ({post, selectedCategory}){
     return {posts,categories}
   }
   */
-  console.log(posts)
   return {posts, selectedCategory}
 }
 

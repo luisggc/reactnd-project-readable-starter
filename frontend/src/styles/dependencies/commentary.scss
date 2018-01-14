@@ -18,3 +18,55 @@
         display:none;
     }
 }
+
+.commentary{
+    max-width:600px;
+    margin:0px auto;
+    height:auto;
+
+    .text-ball{
+        display: block;
+        line-height: 24px;
+        padding: 5px 24px;
+        font-family: "Franklin ITC Light",sans-serif;
+        color: #000;
+        background-color: $white;
+        border: 2px solid $orange;
+        border-radius: 6px;
+        -webkit-transition: all .1s ease-in;
+        transition: all .1s ease-in;
+        width:100%;
+        word-break: break-word;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        user-select: text;
+        font-size: 1em;
+    }
+    &.make{
+        margin:20px auto;
+        & .text-ball{
+            padding: 18px 24px;
+        }
+    }
+  
+}
+
+
+.tri{
+        display: block;
+        position:relative;
+        top:50px;
+        width: 0;
+        height: 0;
+        z-index:999;
+        &.left{
+            right:15px;
+            border-right: 18px solid #fff;
+            border-top: 18px solid transparent;
+        }
+        &.right{
+            left:100%;
+            border-left: 18px solid #fff;
+            border-top: 18px solid transparent;
+        }
+}

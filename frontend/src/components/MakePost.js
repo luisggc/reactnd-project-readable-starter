@@ -15,7 +15,6 @@ class MakePost extends Component{
                     [name] : value
                   }
         },{})
-        body={...body, timestamp:Date.now(), id: guid() }
         console.log('bodyy',body)
         void (valid ? (sendPost(body) && this.props.dispatch(fetchAllPosts()) ) : alert('No empty values allowed'))
         /*if (valid){
@@ -52,17 +51,6 @@ class MakePost extends Component{
 function prop({selectedCategory}){
  return {selectedCategory}
 }
-
-function guid() {
-    function s4() {
-      return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
-    }
-    return s4() + s4() + s4() + s4() + 
-      s4() + s4() + s4() + s4();
-  }
-
 
 
 export default connect(prop)(MakePost)
