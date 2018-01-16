@@ -22,12 +22,10 @@
 .commentary{
     max-width:600px;
     margin:0px auto;
-    height:auto;
-
+    //height:auto;
     .text-ball{
-        display: block;
-        line-height: 24px;
-        padding: 5px 24px;
+        //line-height: 24px;
+        padding: 20px 24px 15px 35px;
         font-family: "Franklin ITC Light",sans-serif;
         color: #000;
         background-color: $white;
@@ -36,37 +34,77 @@
         -webkit-transition: all .1s ease-in;
         transition: all .1s ease-in;
         width:100%;
-        word-break: break-word;
-        word-wrap: break-word;
-        white-space: pre-wrap;
-        user-select: text;
         font-size: 1em;
+        p{
+            overflow-wrap: normal;
+            overflow-wrap: break-word;
+        }
     }
     &.make{
         margin:20px auto;
         & .text-ball{
             padding: 18px 24px;
+            /*
+            word-break: break-word;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            user-select: text;
+            */
         }
     }
-  
+    .timestamp{
+        position:relative;
+        float:right;
+        padding:0;
+        top:10px;
+        left:-40px;
+        color:black;
+        font-size:10px;
+    }
+    .score{
+        font-size:12px;
+        position: relative;
+        top: 45px;
+        left:8px;
+    }
+    .delete-comment{
+        float:right;
+        position:relative;        
+        top: 7px;
+        left:90px;
+        color:black;
+        text-align:right;
+        width:auto;
+        cursor: pointer;
+    }
+    .delete-comment:hover{
+        border: 1px solid #000 
+    }
 }
 
 
 .tri{
-        display: block;
-        position:relative;
-        top:50px;
-        width: 0;
-        height: 0;
-        z-index:999;
-        &.left{
-            right:15px;
-            border-right: 18px solid #fff;
-            border-top: 18px solid transparent;
-        }
-        &.right{
-            left:100%;
-            border-left: 18px solid #fff;
-            border-top: 18px solid transparent;
-        }
+    display: block;
+    position:relative;
+    top:50px;
+    width: 0;
+    height: 0;
+    z-index:999;
+    &.left{
+        right:15px;
+        border-right: 18px solid #fff;
+        border-top: 18px solid transparent;
+    }
+    &.right{
+        top:80px;
+        left:100%;
+        border-left: 18px solid #fff;
+        border-top: 18px solid transparent;
+    }
+}
+
+.votebox-comment{
+    float:left;
+    top:-50px;
+    left:-29px;
 }

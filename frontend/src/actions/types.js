@@ -21,3 +21,11 @@ export function loadingPosts(bool=false) {
     bool
   }
 }
+
+export const CREAT_USER = 'CREAT_USER'
+export function creatUser(name = 'Anonymous') {
+  return {
+    type: CREAT_USER,
+    name
+  }
+}

@@ -442,6 +442,18 @@ body {
   margin: 0 auto;
   cursor: pointer; }
 
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  text-align: center; }
+
+.modal-user {
+  max-width: 100%;
+  z-index: 9999999; }
+
 *, *:before, *:after {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -586,7 +598,8 @@ header {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   padding: 15px 30px;
   display: flex;
-  position: fixed; }
+  position: fixed;
+  z-index: 2; }
   header img {
     height: 50px; }
   header nav {
@@ -827,12 +840,9 @@ aside {
 
 .commentary {
   max-width: 600px;
-  margin: 0px auto;
-  height: auto; }
+  margin: 0px auto; }
   .commentary .text-ball {
-    display: block;
-    line-height: 24px;
-    padding: 5px 24px;
+    padding: 20px 24px 15px 35px;
     font-family: "Franklin ITC Light",sans-serif;
     color: #000;
     background-color: #fff;
@@ -841,15 +851,44 @@ aside {
     -webkit-transition: all .1s ease-in;
     transition: all .1s ease-in;
     width: 100%;
-    word-break: break-word;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-    user-select: text;
     font-size: 1em; }
+    .commentary .text-ball p {
+      overflow-wrap: normal;
+      overflow-wrap: break-word; }
   .commentary.make {
     margin: 20px auto; }
     .commentary.make .text-ball {
-      padding: 18px 24px; }
+      padding: 18px 24px;
+      /*
+      word-break: break-word;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      user-select: text;
+      */ }
+  .commentary .timestamp {
+    position: relative;
+    float: right;
+    padding: 0;
+    top: 10px;
+    left: -40px;
+    color: black;
+    font-size: 10px; }
+  .commentary .score {
+    font-size: 12px;
+    position: relative;
+    top: 45px;
+    left: 8px; }
+  .commentary .delete-comment {
+    float: right;
+    position: relative;
+    top: 7px;
+    left: 90px;
+    color: black;
+    text-align: right;
+    width: auto;
+    cursor: pointer; }
+  .commentary .delete-comment:hover {
+    border: 1px solid #000; }
 
 .tri {
   display: block;
@@ -863,8 +902,14 @@ aside {
     border-right: 18px solid #fff;
     border-top: 18px solid transparent; }
   .tri.right {
+    top: 80px;
     left: 100%;
     border-left: 18px solid #fff;
     border-top: 18px solid transparent; }
+
+.votebox-comment {
+  float: left;
+  top: -50px;
+  left: -29px; }
 
 /*# sourceMappingURL=index.css.map */

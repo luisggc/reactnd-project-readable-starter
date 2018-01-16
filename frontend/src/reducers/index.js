@@ -1,7 +1,7 @@
-
 import {
   SELECT_CATEGORY,
-  RECEIVE_ALL_POSTS, REQUEST_ALL_POSTS, LOADING_POSTS
+  RECEIVE_ALL_POSTS, REQUEST_ALL_POSTS, LOADING_POSTS,
+  CREAT_USER
 } from '../actions'
 
 import { combineReducers } from 'redux'
@@ -35,12 +35,21 @@ function post(state = {}, action) {
 }
 const CompareForSort = (f, s) =>  ((f.timestamp === s.timestamp) ? 0 : (f.timestamp>s.timestamp) ? -1 : 1)  
 
-
+function user(state = {name:''}, action){
+  switch(action.type){
+    case CREAT_USER:
+    const name = action.name
+      return { name }
+    default:
+      return state
+  }
+}
 
 
 const rootReducer = combineReducers({
   selectedCategory,
-  post
+  post,
+  user
 })
 
 export default rootReducer

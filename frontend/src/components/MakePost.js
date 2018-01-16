@@ -4,6 +4,8 @@ import { fetchAllPosts } from './../actions'
 import { sendPost } from './../API'
 class MakePost extends Component{
 
+    state = {status:true}
+
     send = (e) => {
         const a = Array.prototype.slice.call(this.refs.form.childNodes)
         let valid=true;
@@ -15,21 +17,24 @@ class MakePost extends Component{
                     [name] : value
                   }
         },{})
-        console.log('bodyy',body)
+        body={...body, author:this.props.user.name}
         void (valid ? (sendPost(body) && this.props.dispatch(fetchAllPosts()) ) : alert('No empty values allowed'))
-        /*if (valid){
-            console.log(sendPost(body))
-        }else{
-            alert('No empty values allowed')
-        }*/
     }
-
+/*
+    handleInputChange(event) {
+        const target = event.target;
+        //target.type === 'checkbox' ? target.checked : 
+        const value = target.value;
+        value === '' && this.setState({status:false})
+        const name = target.name;
+        this.setState({[name]: value});
+      }
+*/
     render(){
         const { selectedCategory, categories } = this.props
         return(
                 <div className='makePost'>
                     <form ref="form" >
-                        <input name='author' type='text' placeholder='Author'/>
                         <input name='title' type='text' placeholder='Title'/>
                         <textarea name='body' placeholder='Post content' ></textarea>
                         <select defaultValue={selectedCategory}  name="category">
@@ -48,8 +53,8 @@ class MakePost extends Component{
     
 }
 
-function prop({selectedCategory}){
- return {selectedCategory}
+function prop({selectedCategory,user}){
+ return {selectedCategory,user}
 }
 
 

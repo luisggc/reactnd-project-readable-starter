@@ -14,6 +14,8 @@ const store = createStore(rootReducer, composeWithDevTools(
   applyMiddleware(thunkMiddleware)
 ));
 
+//if (store.getState().user.name == ''){
+//.dispatch(checkUser())
 store
   .dispatch(fetchAllPosts())
   .then(() => console.log(store.getState()))

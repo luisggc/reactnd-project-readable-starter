@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { deletePost, votePost, sendCommentary, getCommentaries } from './../API'
+import { deletePost, votePost, sendCommentary, getCommentaries, timeConverter } from './../API'
 import Commentary from './Commentary'
+import { connect } from 'react-redux'
 
 class Post extends Component{
 
@@ -33,7 +34,7 @@ class Post extends Component{
         if(e.key!=='Enter'){return}
         const id = this.props.info.id
         const body = document.getElementById(`sendcomment${id}`).value
-        const author = 'Luis'+id
+        const author = this.props.user.name
         sendCommentary(body,author,id)
     }
 
@@ -44,7 +45,7 @@ class Post extends Component{
         return(
             
                 <div id={ident} className={`post ${category}`}>
-                    <div className='post-delete' onClick={() => this.removePost()} >X</div>
+                    { this.props.user.name===author && (<div className='post-delete' onClick={() => this.removePost()} >X</div>)}
                     <h3>{title}</h3>
                     <p>{body} {body} {body} {body} {body} {body} {body} {body} {body} {body} {body} {body} 
                     {body} {body} {body} {body} {body} {body} {body} {body} {body} {body} </p>
@@ -82,19 +83,8 @@ class Post extends Component{
     
 }
 
-function timeConverter(UNIX_timestamp){
-    var a = new Date(UNIX_timestamp);
-    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    var year = a.getFullYear();
-    var month = months[a.getMonth()];
-    var date = a.getDate();
-    var hour = a.getHours();
-    var min = a.getMinutes();
-    var sec = a.getSeconds();
-    return date + ', ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-    
+function mapStateToProps ({user}){
+    return {user}
   }
-
-
-
-export default Post
+  
+export default connect(mapStateToProps)(Post)
