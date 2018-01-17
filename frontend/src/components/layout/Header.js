@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import {creatUser} from './../../actions'
 
 class Header extends Component {
     render(){
@@ -9,9 +11,7 @@ class Header extends Component {
               </a>
               <nav className='container'>
                 <ul>
-                  {this.props.categories.map(category => (
-                       <li key={category.path} ><a>{category.name}</a></li>
-                  ))}
+                    <li><a onClick={() => this.props.dispatch(creatUser(''))} >Change User</a></li>
                 </ul>
               </nav>
         </header>
@@ -19,4 +19,4 @@ class Header extends Component {
     }
 }
 
-export default Header
+export default connect()(Header)

@@ -32,11 +32,11 @@ class App extends Component {
               {posts !== undefined && posts.constructor === Array ? posts.filter(p => (
                 (selectedCategory==="all") ? true : p.category === selectedCategory
               )).map(post => (
-                <Post key={post.id} info={post}/>
+                <Post key={post.id} id={post.id}/>
               )):null}
           </div>
 
-          <Modal open={user.name === ''} little>
+          <Modal open={user.name === ''} showCloseIcon={false} onClose={() => true} little>
             <label>Choose a username:</label>
             <input onChange={(e) => this.setState({name:e.target.value})} />
             <button onClick={() => this.props.dispatch(creatUser(name))}>Ok</button>
@@ -64,8 +64,12 @@ class App extends Component {
 
 function mapStateToProps ({post, selectedCategory, user}){
   const posts = post.all
+  let token = localStorage.token
+  if (token)
+    user.name = token
   return {posts, selectedCategory, user}
 }
+
 
 export default connect(mapStateToProps)(App)
 

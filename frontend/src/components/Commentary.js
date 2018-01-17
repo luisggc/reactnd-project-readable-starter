@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 class Commentary extends Component{
 
     render(){
-        const {id, author, body, voteScore, timestamp } = this.props.info
+        const {id, author, body, voteScore, timestamp } = this.props.commentary
         return(
             <div className='commentary'>
                 <span className='tri right'></span>
@@ -27,8 +27,10 @@ class Commentary extends Component{
 }
 
 
-function mapStateToProps ({user}){
-    return {user}
+function mapStateToProps ({user,post},ownProps){
+    const commentary = post.all.filter(_ => _.id === ownProps.parentId)[0].commentaries
+    .filter(_ => _.id === ownProps.id)[0]
+    return {user,commentary}
   }
   
 export default connect(mapStateToProps)(Commentary)

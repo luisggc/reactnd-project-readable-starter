@@ -610,6 +610,7 @@ header {
       header nav ul li {
         display: inline-block; }
         header nav ul li a {
+          cursor: pointer;
           color: #fff;
           font-weight: bold;
           text-transform: uppercase;

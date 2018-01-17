@@ -5,7 +5,7 @@ export function selectCategory(category) {
     category
   }
 }
-
+/*
 export const INVALIDATE_CATEGORY = 'INVALIDATE_CATEGORY'
 export function invalidateCategory(category) {
   return {
@@ -13,7 +13,7 @@ export function invalidateCategory(category) {
     category
   }
 }
-
+*/
 export const LOADING_POSTS = 'LOADING_POSTS'
 export function loadingPosts(bool=false) {
   return {
@@ -27,5 +27,25 @@ export function creatUser(name = 'Anonymous') {
   return {
     type: CREAT_USER,
     name
+  }
+}
+/*
+export const LOAD_COMMENTARIES = 'LOAD_COMMENTARIES'
+export function loadCommentaries(commentaries,postID) {
+  return {
+    type: LOAD_COMMENTARIES,
+    postID,
+    commentaries
+  }
+}
+*/
+export const ADD_COMMENTARY = 'ADD_COMMENTARY'
+export function addCommentary(commentary,postID) {
+  //body,author,id
+  //const commentary = {body,author,postID}
+  return {
+    type: ADD_COMMENTARY,
+    postID,
+    commentary
   }
 }

@@ -4,7 +4,7 @@ import { fetchAllPosts } from './../actions'
 import { sendPost } from './../API'
 class MakePost extends Component{
 
-    state = {status:true}
+    state = {status:true,futureCategory:undefined}
 
     send = (e) => {
         const a = Array.prototype.slice.call(this.refs.form.childNodes)
@@ -30,18 +30,25 @@ class MakePost extends Component{
         this.setState({[name]: value});
       }
 */
+    componentWillReceiveProps(nextProps){
+        const selectedCategory = nextProps.selectedCategory
+        //if (selectedCategory)
+            this.setState({futureCategory:selectedCategory})
+            console.log("componentWillReceiveProps")
+    }
+
     render(){
-        const { selectedCategory, categories } = this.props
+        console.log("render",this.state)
+        const {categories } = this.props
         return(
                 <div className='makePost'>
                     <form ref="form" >
                         <input name='title' type='text' placeholder='Title'/>
                         <textarea name='body' placeholder='Post content' ></textarea>
-                        <select defaultValue={selectedCategory}  name="category">
-                            {categories.map(category => {
-                                return(
-                                <option key={category.path} value={category.path} >{category.name}</option>
-                            )})}
+                        <select onChange={(e) => {this.setState({futureCategory:e.target.value});console.log('change')}} value={this.state.futureCategory}  name="category">
+                            {categories.map(category => (
+                                <option  key={category.path} value={category.path} >{category.name}</option>
+                            ))}
                         </select>
                     </form>
                     <button onClick={(e)=>this.send(e)} className='butt'>Send</button>

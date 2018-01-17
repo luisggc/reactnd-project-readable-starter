@@ -78,7 +78,7 @@ fetch(`${url}/comments`, {
     parentId
   })
 
-}).then(data => console.log(data.json()))
+}).then(data => data.json())
 
 export const voteCommentary = (id, option) =>
 fetch(`${url}/comments/${id}`, {

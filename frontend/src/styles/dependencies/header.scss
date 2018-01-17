@@ -19,6 +19,7 @@ header{
             li{
                 display: inline-block;
                 a{
+                    cursor: pointer;
                     color: $white;
                     font-weight: bold;
                     text-transform: uppercase;

@@ -9,42 +9,6 @@ const headers = {
   'Authorization': auth
 }
 
-export const REQUEST_POSTS = 'REQUEST_POSTS'
-function requestPostsbyCategory(category) {
-  return {
-    type: REQUEST_POSTS,
-    category
-  }
-}
-
-export const RECEIVE_POSTS = 'RECEIVE_POSTS'
-function receivePostsbyCategory(category, json) {
-  return {
-    type: RECEIVE_POSTS,
-    category,
-    posts: json,
-    receivedAt: Date.now()
-  }
-}
-
-export function fetchPostsbyCategory(category) {
-
-  return function (dispatch) {
-
-    dispatch(requestPostsbyCategory(category))
-
-    return fetch(`${url}/${category}/posts`,{headers})
-      .then(
-        response => response.json(),
-        error => console.log('An error occurred.', error)
-      )
-      .then(json =>
-        //console.log('disp',json)
-        dispatch(receivePostsbyCategory(category, json))
-      )
-  }
-}
-
 export const REQUEST_ALL_POSTS = 'REQUEST_ALL_POSTS'
 function requestAllPosts() {
   return {
@@ -64,9 +28,7 @@ function receiveAllPosts(json) {
 export function fetchAllPosts() {
 
   return function (dispatch) {
-
     dispatch(requestAllPosts())
-
     return fetch(`${url}/posts`,{headers})
       .then(
         response => response.json(),
@@ -74,11 +36,31 @@ export function fetchAllPosts() {
         dispatch(loadingPosts(true))
       )
       .then(json =>
-        //console.log('disp',json)
         dispatch(receiveAllPosts(json)),
         dispatch(loadingPosts(false))
-        
       )
   }
 }
 
+
+export const RECEIVE_COMMENTARIES = 'RECEIVE_COMMENTARIES'
+function receiveCommentaries(commentaries,postID) {
+  return {
+    type: RECEIVE_COMMENTARIES,
+    commentaries,
+    postID
+  }
+}
+
+export function fetchCommentaries(postID) {
+  return function (dispatch) {
+    return fetch(`${url}/posts/${postID}/comments`,{headers})
+      .then(
+        response => response.json(),
+        error => console.log('An error occurred.', error)
+      )
+      .then(commentaries =>
+        dispatch(receiveCommentaries(commentaries,postID))
+      )
+  }
+}
