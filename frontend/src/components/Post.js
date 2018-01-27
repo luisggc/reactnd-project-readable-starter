@@ -20,19 +20,15 @@ class Post extends Component{
         votePost(id,vote).then( a => console.log(a))
     }
 
-    showCommentaries  = () => {
+    toggleCommentaries  = () => {
         const id = this.props.post.id
-        this.setState({showCommentaries:true})
-        this.props.dispatch(fetchCommentaries(id)).then((j) => console.log('cabo'))
+        const show = this.state.showCommentaries
+        !show ? this.props.dispatch(fetchCommentaries(id)).then((j) => {console.log('cabo',this.props.post);this.setState({showCommentaries:!show})})
+            : this.setState({showCommentaries:!show})
         //!this.state.showCommentaries && this.props.dispatch(fetchCommentaries(id)).then((j) => console.log('cabo'))
       // let showCommentaries=!this.state.showCommentaries
        // this.setState({showCommentaries})
       
-        //this.setState({showCommentaries:!this.state.showCommentaries})
-    }
-
-    hideCommentaries = () => {
-        this.setState({showCommentaries:false})
     }
 
     sendCommentary = (e) => {
@@ -47,10 +43,12 @@ class Post extends Component{
     render(){
         console.log('renderpost',this.props)
         console.log(this.props.post)
-        console.log(this.props.post.commentaries)
         //SÓ FUNCIONA ÀS VEZES NÃO SEI PQ
         const {showCommentaries} = this.state
         const { id, body, title, author, timestamp,voteScore, category, commentaries } = this.props.post
+
+        console.log(commentaries)
+
         const ident = `post${id}`
         return(
             
@@ -70,30 +68,22 @@ class Post extends Component{
                     </div>
 
                     <div className='commentaries'>
-                        <a onClick={() => showCommentaries ? this.setState({showCommentaries:false}) : this.showCommentaries()} className='showCommentaries'>{showCommentaries ?"Hide commentaries":"Show commentaries"}</a>
+                        <a onClick={() => this.toggleCommentaries()} className='showCommentaries'>{showCommentaries ?"Hide commentaries":"Show commentaries"}</a>
                         {true && (
                             <div className='commentary-section'>
                                 <div className='commentary make'>
                                     <span className='tri left'></span>
                                     <input className='text-ball' id={'sendcomment'+id} placeholder="Make a comment" onKeyPress={(e) => this.sendCommentary(e)}/>
                                 </div>
-                                {commentaries !== undefined ? commentaries.map(commentary => (
+                                {commentaries !== undefined && showCommentaries && commentaries.map(commentary => (
                                     <Commentary key={commentary.id} parentId={id} id={commentary.id} />
-                                )):null}
-
-
-
-
+                                ))}
                             </div>
                         )}
-
                     </div>
-
                 </div>
         )
     }
-
-    
 }
 
 function mapStateToProps ({user,post},ownProps){
