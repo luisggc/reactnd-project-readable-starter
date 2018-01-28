@@ -5,15 +5,7 @@ export function selectCategory(category) {
     category
   }
 }
-/*
-export const INVALIDATE_CATEGORY = 'INVALIDATE_CATEGORY'
-export function invalidateCategory(category) {
-  return {
-    type: INVALIDATE_CATEGORY,
-    category
-  }
-}
-*/
+
 export const LOADING_POSTS = 'LOADING_POSTS'
 export function loadingPosts(bool=false) {
   return {

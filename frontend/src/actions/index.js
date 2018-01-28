@@ -1,2 +1,3 @@
 export * from './types';
-export * from './API';
+export * from './posts';
+export * from './commentaries';

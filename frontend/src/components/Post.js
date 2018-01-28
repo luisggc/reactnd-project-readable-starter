@@ -1,33 +1,18 @@
 import React, { Component } from 'react'
-import { deletePost, votePost, sendCommentary, timeConverter } from './../API'
+import {  sendCommentary, timeConverter } from './../API'
 import Commentary from './Commentary'
 import { connect } from 'react-redux'
-import {addCommentary, fetchCommentaries} from './../actions'
+import {addCommentary, fetchCommentaries, votePost, deletePost} from './../actions'
 
 class Post extends Component{
 
     state ={showCommentaries:false}
 
-    removePost = () => {
+    toggleCommentaries  = (value = null) => {
         const id = this.props.post.id
-        console.log(this.props)
-        console.log("id",id)
-        document.getElementById(`post${id}`).remove()
-        deletePost(id)
-    }
-
-    vote = (id,vote) => {
-        votePost(id,vote).then( a => console.log(a))
-    }
-
-    toggleCommentaries  = () => {
-        const id = this.props.post.id
-        const show = this.state.showCommentaries
-        !show ? this.props.dispatch(fetchCommentaries(id)).then((j) => {console.log('cabo',this.props.post);this.setState({showCommentaries:!show})})
-            : this.setState({showCommentaries:!show})
-        //!this.state.showCommentaries && this.props.dispatch(fetchCommentaries(id)).then((j) => console.log('cabo'))
-      // let showCommentaries=!this.state.showCommentaries
-       // this.setState({showCommentaries})
+        const show = value==null ? !this.state.showCommentaries : value
+        show ? this.props.dispatch(fetchCommentaries(id)).then((j) => {this.setState({showCommentaries:show})})
+            : this.setState({showCommentaries:show})
       
     }
 
@@ -36,32 +21,26 @@ class Post extends Component{
         const id = this.props.post.id
         const body = document.getElementById(`sendcomment${id}`).value
         const author = this.props.user.name
-        sendCommentary(body,author,id).then(data => {console.log(data);this.props.dispatch(addCommentary(data,id))})
+        sendCommentary(body,author,id).then(data => {this.props.dispatch(addCommentary(data,id));this.toggleCommentaries(true)})
         //this.props.dispatch(addCommentaries(body,author,id))
     }
 
     render(){
-        console.log('renderpost',this.props)
-        console.log(this.props.post)
-        //SÓ FUNCIONA ÀS VEZES NÃO SEI PQ
         const {showCommentaries} = this.state
         const { id, body, title, author, timestamp,voteScore, category, commentaries } = this.props.post
-
-        console.log(commentaries)
-
         const ident = `post${id}`
         return(
             
                 <div id={ident} className={`post ${category}`}>
-                    { this.props.user.name===author && (<div className='post-delete' onClick={() => this.removePost()} >X</div>)}
+                    { this.props.user.name===author && (<div className='post-delete' onClick={() => this.props.dispatch(deletePost(id))} >X</div>)}
                     <h3>{title}</h3>
                     <p>{body}</p>
                     <div className='author'>by: {author}</div>
 
                     <div className='info'>
                         <div className="flex-item votebox">
-                            <div onClick={() => this.vote(id,'upVote')} className="up vote"></div>
-                            <div onClick={() => this.vote(id,'downVote')} className="down vote"></div>
+                            <div onClick={() => this.props.dispatch(votePost(id,'upVote'))} className="up vote"></div>
+                            <div onClick={() => this.props.dispatch(votePost(id,'downVote'))} className="down vote"></div>
                         </div>
                         <div className='flex-item'>Posted:<br/> {timeConverter(timestamp)}</div>
                         <div className='flex-item'>Score: {voteScore}</div>

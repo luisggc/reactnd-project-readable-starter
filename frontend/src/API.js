@@ -1,4 +1,5 @@
 //import fetch from 'cross-fetch'
+/*
 const url = process.env.REACT_APP_BACKEND
 const auth = 10
 
@@ -6,6 +7,8 @@ const headers = {
   'Accept': 'application/json',
   'Authorization': auth
 }
+*/
+import {url, headers} from './actions/API'
 
 /* Categories */
 
@@ -38,21 +41,6 @@ fetch(`${url}/posts`, {
 
 }).then(data => console.log(data.json()))
 
-export const deletePost = (id) =>
-fetch(`${url}/posts/${id}`, {
-  method: 'DELETE',
-  headers
-}).then(data => console.log(data))
-
-export const votePost = (id, option) =>
-fetch(`${url}/posts/${id}`, {
-  method: 'POST',
-  headers: {
-    ...headers,
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({option})
-}).then(data => console.log(data))
 
 /* Commentaries */
 
