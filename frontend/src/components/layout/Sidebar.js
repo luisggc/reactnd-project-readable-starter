@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { selectCategory } from '../../actions'
+import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router'
 
 class Sidebar extends Component{
 
-    changeCategory = (category) => {
+    /*changeCategory = (category) => {
         this.props.dispatch(selectCategory(category))
-    }
+    }*/
 
     toggle = () => {
         this.refs.sidebar.classList.toggle("open")
@@ -17,7 +17,12 @@ class Sidebar extends Component{
     //this.refs.sidebar.classList.remove("open")
 
     render(){
-        const { selectedCategory } = this.props
+        const { categories } = this.props
+        /*console.log(this.props)
+        const { selectedCategory } = this.props*/
+        const path = this.props.location.pathname.split("/")
+        const possCategory = categories.filter( _ => _.path === path[1])
+        const selectedCategory = possCategory[0] ? possCategory[0].path : "all"
        // this.props.categories.push({path:'all',name:'all'})
         return(
             <span>
@@ -26,10 +31,10 @@ class Sidebar extends Component{
                     <h4>Categories</h4>
                         <ul>
 
-                        <li><a className={(selectedCategory==='all') ? 'active' : ''} onClick={() => this.changeCategory('all')}>all</a></li>
+                        <li><Link to="/" className={(selectedCategory==='all') ? 'active' : ''} >all</Link></li>
 
-                        {this.props.categories.map((category) => (
-                            <li key={category.path}><a className={(selectedCategory===category.path) ? 'active' : ''} onClick={() => this.changeCategory(category.path)}>{category.name}</a></li>
+                        {categories.map((category) => (
+                                <li key={category.path}><Link to={"/"+category.path} className={(selectedCategory===category.path) ? 'active' : ''} >{category.name}</Link></li>
                         ))}
 
                         </ul>
@@ -40,8 +45,6 @@ class Sidebar extends Component{
     }
 }
 
-let mapStateToProps = ({selectedCategory}) => {
-    return { selectedCategory }
-}
-export default connect(mapStateToProps)(Sidebar)
+
+export default withRouter(Sidebar)
 //export default Sidebar

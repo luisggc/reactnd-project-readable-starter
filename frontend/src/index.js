@@ -9,6 +9,7 @@ import { fetchAllPosts } from './actions'
 import rootReducer from './reducers';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { BrowserRouter, Route } from 'react-router-dom'
 
 const store = createStore(rootReducer, composeWithDevTools(
   applyMiddleware(thunkMiddleware)
@@ -22,6 +23,8 @@ store
 
 ReactDOM.render(
 <Provider store={store}> 
-    <App/>
+    <BrowserRouter>
+      <Route path="/" component={App} />
+    </BrowserRouter>
 </Provider>, document.getElementById('root'));
 registerServiceWorker();

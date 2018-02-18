@@ -7,6 +7,7 @@ import Post from './Post'
 import { connect } from 'react-redux'
 import Modal from 'react-responsive-modal'
 import {creatUser} from './../actions'
+import { withRouter } from 'react-router'
 
 class App extends Component {
   state={
@@ -20,58 +21,58 @@ class App extends Component {
   }
 
   render() {
-    const { posts, selectedCategory, user } = this.props
+    //selectedCategory
+    const { posts, user } = this.props
     const { categories, name } = this.state
+    
+    const path = this.props.location.pathname.split("/")
+    const possCategory = categories.filter( _ => _.path === path[1])
+    const selectedCategory = possCategory[0] ? possCategory[0].path : "all"
+    const selectedPost = path[2] ? path[2] : null  
+    let filteredPosts = (posts !== undefined && posts.constructor === Array) ? posts.filter(p => (
+      (selectedCategory==="all") ? true :(
+       p.category === selectedCategory && ( selectedPost ? p.id === selectedPost : true ))
+      )):[]
 
     return (
       <div className='App'>
         <Header categories={categories} />
         <Sidebar categories={categories} />
-          <div id='post-section' className='post-section'>
-                <MakePost selectedCategory={selectedCategory} categories={categories} />
-              {posts !== undefined && posts.constructor === Array ? posts.filter(p => (
-                (selectedCategory==="all") ? true : p.category === selectedCategory
-              )).map(post => (
-                <Post key={post.id} id={post.id}/>
-              )):null}
-          </div>
+            <div id='post-section' className='post-section'>
+                  <MakePost selectedCategory={selectedCategory} categories={categories} />
 
-          <Modal open={user.name === ''} showCloseIcon={false} onClose={() => true} little>
-            <label>Choose a username:</label>
-            <input onChange={(e) => this.setState({name:e.target.value})} />
-            <button onClick={() => this.props.dispatch(creatUser(name))}>Ok</button>
-            <button onClick={() => this.props.dispatch(creatUser())}>Anonymous</button>
-          </Modal>
+                {filteredPosts.map(post => (
+                  <Post key={post.id} id={post.id}/>
+                ))}
+            </div>
 
-{/*
-          <div className='modal'>
-            <h2> Hello ! </h2>
-            <br/><br/><br/><br/><br/>
-          </div>
-          
-          <ReactModal 
-           isOpen={user.name===''}
-           contentLabel="User creation"
-           className='modal'
-        >
-          <button >Close Modal</button>
-        </ReactModal>
-        */}
+            <Modal open={user.name === ''} showCloseIcon={false} onClose={() => true} little>
+              <label>Choose a username:</label>
+              <input onChange={(e) => this.setState({name:e.target.value})} />
+              <button onClick={() => this.props.dispatch(creatUser(name))}>Ok</button>
+              <button onClick={() => this.props.dispatch(creatUser())}>Anonymous</button>
+            </Modal>
       </div>
-    );
+    )
   }
 }
 
-function mapStateToProps ({post, selectedCategory, user}){
+const CompareCronoUp = (f, s) =>  ((f.timestamp === s.timestamp) ? 0 : (f.timestamp>s.timestamp) ? -1 : 1)  
+const CompareCronoDown = (f, s) =>  ((f.timestamp === s.timestamp) ? 0 : (f.timestamp<s.timestamp) ? -1 : 1)  
+
+const CompareVoteUp = (f, s) =>  ((f.voteScore === s.voteScore) ? 0 : (f.voteScore>s.voteScore) ? -1 : 1)  
+const CompareVoteDown = (f, s) =>  ((f.voteScore === s.voteScore) ? 0 : (f.voteScore<s.voteScore) ? -1 : 1)  
+
+function mapStateToProps ({post, user}){
   const posts = post.all
   let token = localStorage.token
   if (token)
     user.name = token
-  return {posts, selectedCategory, user}
+  return {posts, user}
 }
 
 
-export default connect(mapStateToProps)(App)
+export default withRouter(connect(mapStateToProps)(App))
 
 
 /*
