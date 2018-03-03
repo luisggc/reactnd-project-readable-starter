@@ -12,32 +12,39 @@ import { withRouter } from 'react-router'
 class App extends Component {
   state={
     categories: [],
-    name:''
+    name:'',
+    filteredPosts:[],
   }
   componentDidMount() {
       API.getCategories().then((categories) =>
-        this.setState({categories})
+        {
+        const { posts } = this.props
+        const path = this.props.location.pathname.split("/")
+        const possCategory = categories.filter( _ => _.path === path[1])
+        const selectedCategory = possCategory[0] ? possCategory[0].path : "all"
+        const selectedPost = path[2] ? path[2] : null  
+        let filteredPosts = (posts !== undefined && posts.constructor === Array) ? posts.filter(p => (
+          (selectedCategory==="all") ? true :(
+           p.category === selectedCategory && ( selectedPost ? p.id === selectedPost : true ))
+          )):[]
+          this.setState({categories,filteredPosts})
+        }
       );
+   
   }
 
   render() {
     //selectedCategory
-    const { posts, user } = this.props
-    const { categories, name } = this.state
-    
-    const path = this.props.location.pathname.split("/")
-    const possCategory = categories.filter( _ => _.path === path[1])
-    const selectedCategory = possCategory[0] ? possCategory[0].path : "all"
-    const selectedPost = path[2] ? path[2] : null  
-    let filteredPosts = (posts !== undefined && posts.constructor === Array) ? posts.filter(p => (
-      (selectedCategory==="all") ? true :(
-       p.category === selectedCategory && ( selectedPost ? p.id === selectedPost : true ))
-      )):[]
+    const { user } = this.props
+    const { categories, name, selectedCategory, filteredPosts } = this.state
+ 
 
     return (
       <div className='App'>
         <Header categories={categories} />
         <Sidebar categories={categories} />
+        <input type='button' value='Ordenar' onClick={() =>{ this.setState({filteredPosts:filteredPosts.sort(CompareVoteUp)});console.log(filteredPosts)}
+      } style={{backgroundColor:'#fff',zIndex:99999,marginTop:'400px'}} />
             <div id='post-section' className='post-section'>
                   <MakePost selectedCategory={selectedCategory} categories={categories} />
 
