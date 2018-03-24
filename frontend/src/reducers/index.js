@@ -61,9 +61,9 @@ function post(state = {}, action) {
       })
       return {...state,all:postdel_commentary}
     case MODIFY_COMMENTARY:
-      const modified_commentary = state.all.map(c =>{
-        if (c.id === commentary.parentID) c.commentaries = c.commentaries.map(_ => _=commentary)
-        return c
+      const modified_commentary = state.all.map(p =>{
+        if (p.id === commentary.parentID) p.commentaries = p.commentaries.map(c => c.id===commentary.id ? commentary:c)
+        return p
       })
       return {...state,all:modified_commentary}
     default:

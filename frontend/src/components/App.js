@@ -11,13 +11,7 @@ import { withRouter } from 'react-router'
 
 class App extends Component {
   state={
-<<<<<<< HEAD
     categories: [],name:'',filteredPosts:[]
-=======
-    categories: [],
-    name:'',
-    filteredPosts:[],
->>>>>>> 09df6e9c21ddb071d51a00097638b68c25b6955f
   }
   
   componentDidMount() {
@@ -39,7 +33,6 @@ class App extends Component {
   }
 
   render() {
-<<<<<<< HEAD
 
     const { posts, user } = this.props
     const { categories, name, selectedFilter} = this.state
@@ -59,12 +52,6 @@ class App extends Component {
     selectedFilter === 'Mais antigos' ? CompareCronoDown : 
     selectedFilter === 'Menores votos' ? CompareVoteDown : CompareCronoUp
     filteredPosts = filteredPosts.sort(sort_func)
-=======
-    //selectedCategory
-    const { user } = this.props
-    const { categories, name, selectedCategory, filteredPosts } = this.state
- 
->>>>>>> 09df6e9c21ddb071d51a00097638b68c25b6955f
 
     return (
       <div className='App'>
