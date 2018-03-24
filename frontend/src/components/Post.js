@@ -27,7 +27,7 @@ class Post extends Component{
 
     render(){
         const {showCommentaries} = this.state
-        const { id, body, title, author, timestamp,voteScore, category, commentaries } = this.props.post
+        const { id, body, title, author, timestamp,voteScore, category, commentaries, commentCount } = this.props.post
         const ident = `post${id}`
         return(
             
@@ -47,7 +47,7 @@ class Post extends Component{
                     </div>
 
                     <div className='commentaries'>
-                        <a onClick={() => this.toggleCommentaries()} className='showCommentaries'>{showCommentaries ?"Hide commentaries":"Show commentaries"}</a>
+                        <a onClick={() => this.toggleCommentaries()} className='showCommentaries'>{showCommentaries ?"Hide commentaries":`Show commentaries (${commentCount})`}</a>
                         {true && (
                             <div className='commentary-section'>
                                 <div className='commentary make'>
@@ -68,7 +68,7 @@ class Post extends Component{
 function mapStateToProps ({user,post},ownProps){
     
     post = (post.all.filter(_ => _.id === ownProps.id)[0])
-    console.log(post)
+    //console.log(post)
     //this.props.post = (this.props.post.filter(_ => _.id === this.props.id)[0])
     return {user,post}
   }

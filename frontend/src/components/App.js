@@ -11,9 +11,9 @@ import { withRouter } from 'react-router'
 
 class App extends Component {
   state={
-    categories: [],
-    name:''
+    categories: [],name:'',filteredPosts:[]
   }
+  
   componentDidMount() {
       API.getCategories().then((categories) =>
         this.setState({categories})
@@ -21,10 +21,11 @@ class App extends Component {
   }
 
   render() {
-    //selectedCategory
+
     const { posts, user } = this.props
-    const { categories, name } = this.state
+    const { categories, name, selectedFilter} = this.state
     
+    /*Url Filter*/
     const path = this.props.location.pathname.split("/")
     const possCategory = categories.filter( _ => _.path === path[1])
     const selectedCategory = possCategory[0] ? possCategory[0].path : "all"
@@ -33,6 +34,12 @@ class App extends Component {
       (selectedCategory==="all") ? true :(
        p.category === selectedCategory && ( selectedPost ? p.id === selectedPost : true ))
       )):[]
+    /* Sort Posts */
+    const filters=['Mais recentes','Maiores votos','Mais antigos','Menores votos']
+    const sort_func = selectedFilter === 'Maiores votos' ?  CompareVoteUp :
+    selectedFilter === 'Mais antigos' ? CompareCronoDown : 
+    selectedFilter === 'Menores votos' ? CompareVoteDown : CompareCronoUp
+    filteredPosts = filteredPosts.sort(sort_func)
 
     return (
       <div className='App'>
@@ -40,6 +47,15 @@ class App extends Component {
         <Sidebar categories={categories} />
             <div id='post-section' className='post-section'>
                   <MakePost selectedCategory={selectedCategory} categories={categories} />
+
+                  <select  name="category"
+                  onChange={(e) => this.setState({selectedFilter:e.target.value})}
+                  value={selectedFilter}
+                  style={{backgroundColor:'#fff',zIndex:99999,marginBottom:'5px'}}>
+                      {filters.map(f => (
+                          <option key={f}>{f}</option>
+                      ))}
+                  </select>
 
                 {filteredPosts.map(post => (
                   <Post key={post.id} id={post.id}/>
@@ -59,7 +75,6 @@ class App extends Component {
 
 const CompareCronoUp = (f, s) =>  ((f.timestamp === s.timestamp) ? 0 : (f.timestamp>s.timestamp) ? -1 : 1)  
 const CompareCronoDown = (f, s) =>  ((f.timestamp === s.timestamp) ? 0 : (f.timestamp<s.timestamp) ? -1 : 1)  
-
 const CompareVoteUp = (f, s) =>  ((f.voteScore === s.voteScore) ? 0 : (f.voteScore>s.voteScore) ? -1 : 1)  
 const CompareVoteDown = (f, s) =>  ((f.voteScore === s.voteScore) ? 0 : (f.voteScore<s.voteScore) ? -1 : 1)  
 
@@ -70,11 +85,8 @@ function mapStateToProps ({post, user}){
     user.name = token
   return {posts, user}
 }
-
-
 export default withRouter(connect(mapStateToProps)(App))
-
-
 /*
 http://jsfiddle.net/GzYJ6/
+https://review.udacity.com/#!/rubrics/1017/view
 */

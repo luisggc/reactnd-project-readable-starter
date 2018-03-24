@@ -2,7 +2,7 @@ import {
   SELECT_CATEGORY,
   RECEIVE_ALL_POSTS, REQUEST_ALL_POSTS, LOADING_POSTS, MODIFY_POST, DELETE_POST,
   CREAT_USER,
-  ADD_COMMENTARY, RECEIVE_COMMENTARIES
+  ADD_COMMENTARY, RECEIVE_COMMENTARIES, DELETE_COMMENTARY, MODIFY_COMMENTARY
 } from '../actions'
 
 import { combineReducers } from 'redux'
@@ -54,6 +54,18 @@ function post(state = {}, action) {
          return c
         })
         return {...state,all:add_commentary}
+    case DELETE_COMMENTARY:
+      const postdel_commentary = state.all.map(c =>{
+        if (c.id === postID) c.commentaries = c.commentaries.filter(_ => _.id !== action.commentaryID)
+        return c
+      })
+      return {...state,all:postdel_commentary}
+    case MODIFY_COMMENTARY:
+      const modified_commentary = state.all.map(c =>{
+        if (c.id === commentary.parentID) c.commentaries = c.commentaries.map(_ => _=commentary)
+        return c
+      })
+      return {...state,all:modified_commentary}
     default:
       return state
   }
