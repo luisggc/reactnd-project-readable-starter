@@ -21,6 +21,15 @@ export function creatUser(name = 'Anonymous') {
     name
   }
 }
+
+export const EDIT_TEMP = 'EDIT_TEMP'
+export function editTemp(id, title, body, kind) {
+  return {
+    type: EDIT_TEMP,
+    id, title, body, kind
+  }
+}
+
 /*
 export const LOAD_COMMENTARIES = 'LOAD_COMMENTARIES'
 export function loadCommentaries(commentaries,postID) {

@@ -1,6 +1,7 @@
 import {url, headers} from './API'
 import { loadingPosts } from './types'
 import fetch from 'cross-fetch'
+import { modifyCommentary } from './commentaries'
 
 export const REQUEST_ALL_POSTS = 'REQUEST_ALL_POSTS'
 function requestAllPosts() {
@@ -79,19 +80,35 @@ export function deletePost(id) {
         )
     }
 }
-/*
-export const DELETE_POST = 'DELETE_POST'
 
-export function deletePost(id) {
-    return function(dispatch){
-        return fetch(`${url}/posts/${id}`, {
-            method: 'DELETE',
-            headers
-          }).then(response => response.json())
-          .then(json => dispatch({
-            type: DELETE_POST,
-            postID:json.id,
-            receivedAt: Date.now()
-          }))
-    }
-}*/
+
+export const EDIT_ACTION = 'EDIT_ACTION'
+export function editAction(edit) {
+  const {id, title, body, kind }= edit
+  return function (dispatch) {
+
+    return fetch(`${url}/${kind}/${id}`, {
+      method: 'PUT',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        body,
+        title,
+        timestamp: Date.now()
+      })
+    })
+      .then(
+        response => response.json(),
+        error => console.log('An error occurred.', error)
+      )
+      .then(json => {
+        if (kind==='posts'){
+          dispatch(modifyPost(json))
+        }else{
+          dispatch(modifyCommentary(json))
+        }
+        })
+  }
+}

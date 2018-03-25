@@ -26,7 +26,7 @@ body{
     margin: 0 auto;
     cursor: pointer;
 }
-
+/*
 .modal{
     position: fixed;
     top: 50%;
@@ -34,9 +34,48 @@ body{
     transform: translate(-50%, -50%);
     z-index:5;
     text-align:center;
+
+*/
+@mixin modal{ 
+    height:60px;
+    max-height: 100%;
+    *{
+        margin-left:10px;
+    }
+}
+.modal-app{
+    @include modal
 }
 
+.modal-edit{
+    @include modal;
+    height:240px;
+    *{
+        display: block;
+        margin:8px auto;
+        text-align:center;
+    }
+    h1{
+        margin-bottom:15px;
+        font-size: 35px;
+    }
+    textarea{
+        display:block;
+        width:100%;
+        max-width:200px;
+        margin: 0 auto 10px auto;
+    }
+}
+
+
+/*
 .modal-user{
     max-width:100%;
     z-index:9999999;
+}*/
+
+.select_sort{
+    background-color:#fff;
+    z-index:99999;
+    margin-bottom:10px
 }

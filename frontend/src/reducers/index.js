@@ -2,7 +2,8 @@ import {
   SELECT_CATEGORY,
   RECEIVE_ALL_POSTS, REQUEST_ALL_POSTS, LOADING_POSTS, MODIFY_POST, DELETE_POST,
   CREAT_USER,
-  ADD_COMMENTARY, RECEIVE_COMMENTARIES, DELETE_COMMENTARY, MODIFY_COMMENTARY
+  ADD_COMMENTARY, RECEIVE_COMMENTARIES, DELETE_COMMENTARY, MODIFY_COMMENTARY,
+  EDIT_TEMP
 } from '../actions'
 
 import { combineReducers } from 'redux'
@@ -61,6 +62,7 @@ function post(state = {}, action) {
       })
       return {...state,all:postdel_commentary}
     case MODIFY_COMMENTARY:
+    commentary.parentID = commentary.parentId ? commentary.parentId  : commentary.parentID 
       const modified_commentary = state.all.map(p =>{
         if (p.id === commentary.parentID) p.commentaries = p.commentaries.map(c => c.id===commentary.id ? commentary:c)
         return p
@@ -86,11 +88,22 @@ function user(state = {name:''}, action){
   }
 }
 
+function editTemp(state=null, action){
+  const { id, title, body, kind } = action
+  switch(action.type){
+    case EDIT_TEMP:
+      if (id==='') return null
+      return { id, title, body, kind }
+    default:
+      return state
+  }
+}
 
 const rootReducer = combineReducers({
   selectedCategory,
   post,
-  user
+  user,
+  editTemp
 })
 
 export default rootReducer

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {  sendCommentary, timeConverter } from './../API'
 import Commentary from './Commentary'
 import { connect } from 'react-redux'
-import {addCommentary, fetchCommentaries, votePost, deletePost} from './../actions'
+import {addCommentary, fetchCommentaries, votePost, deletePost, editTemp} from './../actions'
 
 class Post extends Component{
 
@@ -32,7 +32,13 @@ class Post extends Component{
         return(
             
                 <div id={ident} className={`post ${category}`}>
-                    { this.props.user.name===author && (<div className='post-delete' onClick={() => this.props.dispatch(deletePost(id))} >X</div>)}
+                    { this.props.user.name===author && (
+                        <div>
+                        <div className='post-top' onClick={() => this.props.dispatch(deletePost(id))} >X</div>
+                        <div className='post-top left' onClick={
+                            () => this.props.dispatch(editTemp( id, title, body, 'posts' ))} ><i className="material-icons">&#xe22b;</i></div>
+                       </div>
+                        )}
                     <h3>{title}</h3>
                     <p>{body}</p>
                     <div className='author'>by: {author}</div>

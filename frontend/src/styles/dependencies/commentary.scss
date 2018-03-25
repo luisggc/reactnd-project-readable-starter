@@ -57,7 +57,7 @@
         float:right;
         padding:0;
         top:10px;
-        left:-40px;
+        left:-60px;
         color:black;
         font-size:10px;
     }
@@ -78,6 +78,23 @@
         cursor: pointer;
     }
     .delete-comment:hover{
+        border: 1px solid #000 
+    }
+    .edit-comment{
+        float:right;
+        position:relative;        
+        top: 7px;
+        left:90px;
+        color:black;
+        text-align:right;
+        width:auto;
+        cursor: pointer;
+        margin-right:10px;
+        .material-icons{
+            font-size: 15px;
+        }
+    }
+    .edit-comment:hover{
         border: 1px solid #000 
     }
 }

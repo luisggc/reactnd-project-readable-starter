@@ -80,18 +80,24 @@
 }
 
 
-.post-delete{
+.post-top{
     padding:auto;
     width:auto;
     height:auto;
     padding:2px;
     float: right;
-    
+    font-size: 15px;
     cursor: pointer;
     z-index:1;
 
     &:hover{
         border: 1px solid $white;
+    }
+    &.left{
+        margin-right:10px;
+        .material-icons{
+            font-size: 15px;
+        }
     }
 }
 

@@ -2,7 +2,7 @@
 import React, {Component} from 'react'
 import {timeConverter} from './../API'
 import { connect } from 'react-redux'
-import {deleteCommentary, voteCommentary} from './../actions'
+import {deleteCommentary, voteCommentary, editTemp} from './../actions'
 
 class Commentary extends Component{
 
@@ -16,6 +16,9 @@ class Commentary extends Component{
                 <span className='tri right'></span>
                 <span className='timestamp'>{timeConverter(timestamp)}</span>
                 <div onClick={() => this.props.dispatch(deleteCommentary(id, parentID))} className='delete-comment'>X</div>
+                <div onClick={() => this.props.dispatch(editTemp( id, '', body, 'comments' ))} className='edit-comment'>
+                    <i className="material-icons">&#xe22b;</i>   
+                </div>
                 <div className='text-ball'>
                     <h2>{author}</h2>
                     <p>{body}</p>

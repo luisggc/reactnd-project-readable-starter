@@ -6,8 +6,9 @@ import MakePost from './MakePost'
 import Post from './Post'
 import { connect } from 'react-redux'
 import Modal from 'react-responsive-modal'
-import {creatUser} from './../actions'
+import {creatUser, editAction} from './../actions'
 import { withRouter } from 'react-router'
+import {editTemp as editTemp_func} from './../actions' 
 
 class App extends Component {
   state={
@@ -32,9 +33,23 @@ class App extends Component {
    
   }
 
-  render() {
+  submitChange = () => {
+    const editTemp = this.props.editTemp
+    const body = this.refs.modal_edit_body.value
+    const title = editTemp.kind === 'posts' ? this.refs.modal_edit_title.value : 'valor'
 
-    const { posts, user } = this.props
+    if(body==='' || title===''){
+      alert('Empty values are not allowed!')
+      return
+    }
+
+    this.props.dispatch(editAction({...editTemp, body, title})).then(
+      this.props.dispatch(editTemp_func('')))
+  }
+
+  render() {
+    console.log(this.props)
+    const { posts, user, editTemp } = this.props
     const { categories, name, selectedFilter} = this.state
     
     /*Url Filter*/
@@ -47,25 +62,24 @@ class App extends Component {
        p.category === selectedCategory && ( selectedPost ? p.id === selectedPost : true ))
       )):[]
     /* Sort Posts */
-    const filters=['Mais recentes','Maiores votos','Mais antigos','Menores votos']
-    const sort_func = selectedFilter === 'Maiores votos' ?  CompareVoteUp :
-    selectedFilter === 'Mais antigos' ? CompareCronoDown : 
-    selectedFilter === 'Menores votos' ? CompareVoteDown : CompareCronoUp
+    const filters=['Last posts','Highest scores','First Posts','Lowest Scores']
+    const sort_func = selectedFilter === 'Highest scores' ?  CompareVoteUp :
+    selectedFilter === 'First Posts' ? CompareCronoDown : 
+    selectedFilter === 'Lowest Scores' ? CompareVoteDown : CompareCronoUp
     filteredPosts = filteredPosts.sort(sort_func)
 
     return (
       <div className='App'>
         <Header categories={categories} />
         <Sidebar categories={categories} />
-        <input type='button' value='Ordenar' onClick={() =>{ this.setState({filteredPosts:filteredPosts.sort(CompareVoteUp)});console.log(filteredPosts)}
-      } style={{backgroundColor:'#fff',zIndex:99999,marginTop:'400px'}} />
             <div id='post-section' className='post-section'>
                   <MakePost selectedCategory={selectedCategory} categories={categories} />
 
                   <select  name="category"
                   onChange={(e) => this.setState({selectedFilter:e.target.value})}
                   value={selectedFilter}
-                  style={{backgroundColor:'#fff',zIndex:99999,marginBottom:'5px'}}>
+                  className='select_sort'
+                  >
                       {filters.map(f => (
                           <option key={f}>{f}</option>
                       ))}
@@ -76,12 +90,26 @@ class App extends Component {
                 ))}
             </div>
 
-            <Modal open={user.name === ''} showCloseIcon={false} onClose={() => true} little>
+            <Modal open={user.name === ''} showCloseIcon={false} onClose={() => true}  
+            classNames={{'modal':'modal-app'}} little>
               <label>Choose a username:</label>
               <input onChange={(e) => this.setState({name:e.target.value})} />
               <button onClick={() => this.props.dispatch(creatUser(name))}>Ok</button>
               <button onClick={() => this.props.dispatch(creatUser())}>Anonymous</button>
             </Modal>
+{editTemp && (
+            <Modal open={true} onClose={() => this.props.dispatch(editTemp_func(''))} 
+           classNames={{'modal':'modal-app, modal-edit'}} little>
+              <h1>Edit</h1>
+              {editTemp.kind === 'posts' && (<section>
+              <label>Title</label>
+              <input ref='modal_edit_title' defaultValue={editTemp.title} placeholder='Title'/>
+              </section>)}
+              <label>Message</label>
+              <textarea ref='modal_edit_body' name='body' defaultValue={editTemp.body} placeholder='Post content' ></textarea>
+              <button onClick={() => this.submitChange()}>Edit</button>
+            </Modal>
+)}
       </div>
     )
   }
@@ -92,12 +120,12 @@ const CompareCronoDown = (f, s) =>  ((f.timestamp === s.timestamp) ? 0 : (f.time
 const CompareVoteUp = (f, s) =>  ((f.voteScore === s.voteScore) ? 0 : (f.voteScore>s.voteScore) ? -1 : 1)  
 const CompareVoteDown = (f, s) =>  ((f.voteScore === s.voteScore) ? 0 : (f.voteScore<s.voteScore) ? -1 : 1)  
 
-function mapStateToProps ({post, user}){
+function mapStateToProps ({post, user, editTemp}){
   const posts = post.all
   let token = localStorage.token
   if (token)
     user.name = token
-  return {posts, user}
+  return {posts, user, editTemp}
 }
 export default withRouter(connect(mapStateToProps)(App))
 /*

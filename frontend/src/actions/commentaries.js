@@ -65,10 +65,8 @@ export function deleteCommentary(id, postID) {
     }
 }
 
-
-
 export const MODIFY_COMMENTARY= 'MODIFY_COMMENTARY'
-function modifyCommentary(commentary) {
+export function modifyCommentary(commentary) {
   return {
     type: MODIFY_COMMENTARY,
     commentary,
@@ -94,14 +92,3 @@ export function voteCommentary(id, option, parentID) {
         .then(json => dispatch(modifyCommentary({...json,parentID})))
     }
   }
-
-/*
-export const voteCommentary = (id, option) =>
-fetch(`${url}/comments/${id}`, {
-  method: 'POST',
-  headers: {
-    ...headers,
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({option})
-}).then(data => console.log(data))*/
