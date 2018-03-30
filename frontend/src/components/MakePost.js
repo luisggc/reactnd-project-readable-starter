@@ -20,21 +20,11 @@ class MakePost extends Component{
         body={...body, author:this.props.user.name}
         void (valid ? (sendPost(body) && this.props.dispatch(fetchAllPosts()) ) : alert('No empty values allowed'))
     }
-/*
-    handleInputChange(event) {
-        const target = event.target;
-        //target.type === 'checkbox' ? target.checked : 
-        const value = target.value;
-        value === '' && this.setState({status:false})
-        const name = target.name;
-        this.setState({[name]: value});
-      }
-*/
     componentWillReceiveProps(nextProps){
         const selectedCategory = nextProps.selectedCategory
-        //if (selectedCategory)
+        if(selectedCategory !== this.props.selectedCategory) {
             this.setState({futureCategory:selectedCategory})
-            console.log("componentWillReceiveProps")
+          }
     }
 
     render(){

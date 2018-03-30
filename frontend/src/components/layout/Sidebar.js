@@ -34,12 +34,19 @@ class Sidebar extends Component{
                         <li><Link to="/" className={(selectedCategory==='all') ? 'active' : ''} >all</Link></li>
 
                         {categories.map((category) => (
-                                <li key={category.path}><Link to={"/"+category.path} className={(selectedCategory===category.path) ? 'active' : ''} >{category.name}</Link></li>
+                                <li key={category.path}>
+                                    <Link to={`/${category.path}`} 
+                                        className={(selectedCategory===category.path) ? 'active' : ''} >
+                                        {category.name}
+                                    </Link>
+                                </li>
                         ))}
 
                         </ul>
                 </aside>
-                <div onClick={() => this.toggle()} className='openAside'><div className='arrow-right'></div></div>
+                <div onClick={() => this.toggle()} className='openAside'>
+                    <div className='arrow-right'></div>
+                </div>
             </span>
         )
     }

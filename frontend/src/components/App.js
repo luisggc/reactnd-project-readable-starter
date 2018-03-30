@@ -17,20 +17,8 @@ class App extends Component {
   
   componentDidMount() {
       API.getCategories().then((categories) =>
-        {
-        const { posts } = this.props
-        const path = this.props.location.pathname.split("/")
-        const possCategory = categories.filter( _ => _.path === path[1])
-        const selectedCategory = possCategory[0] ? possCategory[0].path : "all"
-        const selectedPost = path[2] ? path[2] : null  
-        let filteredPosts = (posts !== undefined && posts.constructor === Array) ? posts.filter(p => (
-          (selectedCategory==="all") ? true :(
-           p.category === selectedCategory && ( selectedPost ? p.id === selectedPost : true ))
-          )):[]
-          this.setState({categories,filteredPosts})
-        }
+          this.setState({categories}) //,filteredPosts, error})
       );
-   
   }
 
   submitChange = () => {
@@ -48,25 +36,29 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props)
     const { posts, user, editTemp } = this.props
     const { categories, name, selectedFilter} = this.state
     
     /*Url Filter*/
     const path = this.props.location.pathname.split("/")
-    const possCategory = categories.filter( _ => _.path === path[1])
-    const selectedCategory = possCategory[0] ? possCategory[0].path : "all"
+    //const possCategory = categories.filter( _ => _.path === path[1])
+    const selectedCategory = path[1] ? path[1] : "all"
     const selectedPost = path[2] ? path[2] : null  
     let filteredPosts = (posts !== undefined && posts.constructor === Array) ? posts.filter(p => (
       (selectedCategory==="all") ? true :(
        p.category === selectedCategory && ( selectedPost ? p.id === selectedPost : true ))
       )):[]
+    const error = filteredPosts.length === 0 ? true : false
     /* Sort Posts */
     const filters=['Last posts','Highest scores','First Posts','Lowest Scores']
     const sort_func = selectedFilter === 'Highest scores' ?  CompareVoteUp :
     selectedFilter === 'First Posts' ? CompareCronoDown : 
     selectedFilter === 'Lowest Scores' ? CompareVoteDown : CompareCronoUp
     filteredPosts = filteredPosts.sort(sort_func)
+
+    const posts_render = error ? <div>Page not found!</div> : filteredPosts.map(post => (
+      <Post key={post.id} id={post.id}/>
+    ))
 
     return (
       <div className='App'>
@@ -78,16 +70,12 @@ class App extends Component {
                   <select  name="category"
                   onChange={(e) => this.setState({selectedFilter:e.target.value})}
                   value={selectedFilter}
-                  className='select_sort'
-                  >
+                  className='select_sort'>
                       {filters.map(f => (
                           <option key={f}>{f}</option>
                       ))}
                   </select>
-
-                {filteredPosts.map(post => (
-                  <Post key={post.id} id={post.id}/>
-                ))}
+                {posts_render}
             </div>
 
             <Modal open={user.name === ''} showCloseIcon={false} onClose={() => true}  
@@ -122,7 +110,7 @@ const CompareVoteDown = (f, s) =>  ((f.voteScore === s.voteScore) ? 0 : (f.voteS
 
 function mapStateToProps ({post, user, editTemp}){
   const posts = post.all
-  let token = localStorage.token
+  const token = localStorage.token
   if (token)
     user.name = token
   return {posts, user, editTemp}

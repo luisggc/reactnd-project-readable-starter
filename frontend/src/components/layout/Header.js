@@ -1,10 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import {creatUser} from './../../actions'
 
-class Header extends Component {
-    render(){
-        return(
+const Header = ({dispatch}) => (
             <header>
               <a href='/'> 
                 <img src='http://ao.sossegai.com/images/logo/favicon.png' alt='Sossegai'/>
@@ -16,7 +14,4 @@ class Header extends Component {
               </nav>
         </header>
         )
-    }
-}
-
 export default connect()(Header)
