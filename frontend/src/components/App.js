@@ -7,7 +7,7 @@ import Post from './Post'
 import { connect } from 'react-redux'
 import Modal from 'react-responsive-modal'
 import {creatUser, editAction} from './../actions'
-import { withRouter, Link } from 'react-router'
+import { withRouter } from 'react-router'
 import {editTemp as editTemp_func} from './../actions' 
 
 class App extends Component {
@@ -41,13 +41,15 @@ class App extends Component {
     
     /*Url Filter*/
     const path = this.props.location.pathname.split("/")
+    const possCategory = categories.filter( _ => _.path === path[1])
     const selectedCategory = path[1] ? path[1] : "all"
     const selectedPost = path[2] ? path[2] : null  
     let filteredPosts = (posts !== undefined && posts.constructor === Array) ? posts.filter(p => (
       (selectedCategory==="all") ? true :(
        p.category === selectedCategory && ( selectedPost ? p.id === selectedPost : true ))
       )):[]
-    const error = filteredPosts.length === 0 ? true : false
+    const uniquePost = path[2] ? true : false
+    const error = filteredPosts.length === 0 && possCategory.length===0 ? true : false
     /* Sort Posts */
     const filters=['Last posts','Highest scores','First Posts','Lowest Scores']
     const sort_func = selectedFilter === 'Highest scores' ?  CompareVoteUp :
@@ -56,7 +58,7 @@ class App extends Component {
     filteredPosts = filteredPosts.sort(sort_func)
 
     const posts_render = error ? <div>Page not found!</div> : filteredPosts.map(post => (
-      <Link><Post key={post.id} id={post.id}/></Link>
+      <Post key={post.id} id={post.id} unique={uniquePost}/>
     ))
 
     return (
@@ -64,6 +66,9 @@ class App extends Component {
         <Header categories={categories} />
         <Sidebar categories={categories} />
             <div id='post-section' className='post-section'>
+
+            {(!uniquePost && !error) && (
+                <span>
                   <MakePost selectedCategory={selectedCategory} categories={categories} />
 
                   <select  name="category"
@@ -74,9 +79,12 @@ class App extends Component {
                           <option key={f}>{f}</option>
                       ))}
                   </select>
+                </span>
+            )}
                 {posts_render}
             </div>
-
+                      
+{/*Modals for User Authentication and change to post/commentary*/}
             <Modal open={user.name === ''} showCloseIcon={false} onClose={() => true}  
             classNames={{'modal':'modal-app'}} little>
               <label>Choose a username:</label>

@@ -3,6 +3,7 @@ import {  sendCommentary, timeConverter } from './../API'
 import Commentary from './Commentary'
 import { connect } from 'react-redux'
 import {addCommentary, fetchCommentaries, votePost, deletePost, editTemp} from './../actions'
+import { Link } from 'react-router-dom'
 
 class Post extends Component{
 
@@ -26,12 +27,18 @@ class Post extends Component{
     }
 
     render(){
+        const unique = this.props.unique
         const {showCommentaries} = this.state
+        if (unique && !showCommentaries ) this.toggleCommentaries()
         const { id, body, title, author, timestamp,voteScore, category, commentaries, commentCount } = this.props.post
         const ident = `post${id}`
+        console.log(unique)
         return(
             
                 <div id={ident} className={`post ${category}`}>
+                    {unique && <center><h4 style={{fontSize:'30px'}}>Post details</h4></center>}
+                    {unique ? <Link to= {`/${category}`} >To category</Link>:
+                    <Link to= {`/${category}/${id}`} >To details</Link>}
                     { this.props.user.name===author && (
                         <div>
                         <div className='post-top' onClick={() => this.props.dispatch(deletePost(id))} >X</div>
@@ -53,8 +60,13 @@ class Post extends Component{
                     </div>
 
                     <div className='commentaries'>
-                        <a onClick={() => this.toggleCommentaries()} className='showCommentaries'>{showCommentaries ?"Hide commentaries":`Show commentaries (${commentCount})`}</a>
-                        {true && (
+
+                        {!unique ? (
+                        <a onClick={() => this.toggleCommentaries()} className='showCommentaries'>
+                            {showCommentaries ?"Hide commentaries":`Show commentaries (${commentCount})`}
+                        </a>):
+                        <p>Number of commentaries: {commentCount}</p>}
+
                             <div className='commentary-section'>
                                 <div className='commentary make'>
                                     <span className='tri left'></span>
@@ -64,7 +76,6 @@ class Post extends Component{
                                     <Commentary key={commentary.id} parentId={id} id={commentary.id} />
                                 ))}
                             </div>
-                        )}
                     </div>
                 </div>
         )
