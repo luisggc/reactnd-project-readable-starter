@@ -7,7 +7,7 @@ import Post from './Post'
 import { connect } from 'react-redux'
 import Modal from 'react-responsive-modal'
 import {creatUser, editAction} from './../actions'
-import { withRouter } from 'react-router'
+import { withRouter, Link } from 'react-router'
 import {editTemp as editTemp_func} from './../actions' 
 
 class App extends Component {
@@ -41,7 +41,6 @@ class App extends Component {
     
     /*Url Filter*/
     const path = this.props.location.pathname.split("/")
-    //const possCategory = categories.filter( _ => _.path === path[1])
     const selectedCategory = path[1] ? path[1] : "all"
     const selectedPost = path[2] ? path[2] : null  
     let filteredPosts = (posts !== undefined && posts.constructor === Array) ? posts.filter(p => (
@@ -57,7 +56,7 @@ class App extends Component {
     filteredPosts = filteredPosts.sort(sort_func)
 
     const posts_render = error ? <div>Page not found!</div> : filteredPosts.map(post => (
-      <Post key={post.id} id={post.id}/>
+      <Link><Post key={post.id} id={post.id}/></Link>
     ))
 
     return (
